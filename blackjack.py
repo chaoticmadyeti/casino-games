@@ -186,4 +186,4 @@ while money > 0:
 
 print("You ran out of money. Better luck next time!")
 
-# To do: splitting, insurance, blackjacks
+# To do: splitting, insurance

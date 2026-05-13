@@ -143,7 +143,10 @@ while money > 0:
             if player_value > 21 and num_of_ace > 0:
                 player_value -= 10
                 num_of_ace -= 1
-            print(f"Your hand is of value {player_value}.")
+            if num_of_ace > 0:
+                print(f"Your hand is of value {player_value} / {player_value - 10}.")
+            else:
+                print(f"Your hand is of value {player_value}.")
         else:
             hit_or_stand = ''
             while player_value <= 21:

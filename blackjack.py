@@ -33,6 +33,8 @@ def value_calc(i):
     return val
 
 print("Hello! Welcome to Python Blackjack.")
+print("If you don't know how to play blackjack, I highly suggest you do. Rules are from the USA.")
+print("Note: Cents do not exist in this game. All decimals will be rounded down, to favour the house.")
 while money > 0:
     print(f"You have ${money}.")
 
@@ -97,6 +99,23 @@ while money > 0:
         print("Blackjack!")
         bet = bet // 2 * 3
     else:
+
+        # Handling insurance
+
+        if dealer_hand[0][0] == 'A':
+            print("Would you like to pay for insurance? (Y/N)")
+            insurance_choice = input("Choice: ")
+            while insurance_choice.upper() != 'Y' and double_choice.upper() != 'N':
+                print("Please input either 'Y' or 'N'. Would you like to pay for insurance? (Y/N)")
+                insurance_choice = input("Choice: ")
+            if insurance_choice.upper() == 'Y':
+                if dealer_blackjack:
+                    print("The dealer had a blackjack! Your insurance paid off.")
+                    continue
+                else:
+                    print(f"The dealer doesn't have a blackjack. Your insurance (${bet // 2}) is lost.")
+                    money -= bet // 2
+
 
         # Handling doubling
 
@@ -186,4 +205,4 @@ while money > 0:
 
 print("You ran out of money. Better luck next time!")
 
-# To do: splitting, insurance
+# To do: splitting

@@ -32,10 +32,11 @@ def value_calc(i):
         val += 10
     return val
 
-print("Hello! Welcome to Python Blackjack.")
-print("If you don't know how to play blackjack, I highly suggest you do. Rules are from the USA.")
-print("Note: Cents do not exist in this game. All decimals will be rounded down, to favour the house.")
-while money > 0:
+def blackjack():
+    global money
+    global deck
+    global num_of_ace
+
     print(f"You have ${money}.")
 
     current_deck = deck.copy()
@@ -111,7 +112,7 @@ while money > 0:
             if insurance_choice.upper() == 'Y':
                 if dealer_blackjack:
                     print("The dealer had a blackjack! Your insurance paid off.")
-                    continue
+                    return
                 else:
                     print(f"The dealer doesn't have a blackjack. Your insurance (${bet // 2}) is lost.")
                     money -= bet // 2
@@ -171,7 +172,7 @@ while money > 0:
         if player_value > 21:
             print(f"You bust! You lost ${bet}.")
             money = money - bet
-            continue
+            return
 
     # Dealer reveal and draw
 
@@ -188,7 +189,7 @@ while money > 0:
     if dealer_value > 21:
         print(f"The dealer bust! You won ${bet}.")
         money = money + bet
-        continue
+        return
 
     # Win check
 
@@ -205,6 +206,15 @@ while money > 0:
         money = money + bet
     else:
         print("You tied! Nothing happens.")
+
+# Main blackjack logic:
+
+print("Hello! Welcome to Python Blackjack.")
+print("If you don't know how to play blackjack, I highly suggest you do. This game goes by American rules.")
+print("Note: Cents do not exist in this game. All decimals will be rounded down, to favour the house.")
+
+while money > 0:
+    blackjack()
 
 print("You ran out of money. Better luck next time!")
 

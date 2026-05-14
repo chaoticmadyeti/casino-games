@@ -1,4 +1,5 @@
 import random
+import time
 
 ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 suits = ['Spades', 'Hearts', 'Diamonds', 'Clubs']
@@ -93,7 +94,13 @@ def blackjack():
 
     # Dealing and revealing to the player
 
-    print(f"You pulled {player_hand[0]} and {player_hand[1]}. The dealer pulled {dealer_hand[0]}.")
+    print("Shuffling and drawing...")
+    time.sleep(0.5)
+    print(f"You pulled {player_hand[0]}.")
+    time.sleep(0.5)
+    print(f"You pulled {player_hand[1]}.")
+    time.sleep(0.5)
+    print(f"he dealer pulled {dealer_hand[0]}.")
     print(f"Your hand is of value {player_value}.")
 
     if player_blackjack:
@@ -161,12 +168,15 @@ def blackjack():
                     player_hand.append(current_deck[card])
                     current_deck.pop(card)
                     player_value += value_calc(current_deck[card][0])
+                    print("You hit...")
+                    time.sleep(0.5)
                     print(f"You drew a {current_deck[card]}.")
                     if player_value > 21 and num_of_ace > 0:
                         player_value -= 10
                         num_of_ace -= 1
                     print(f"Your hand is of value {player_value}.")
                 else:
+                    print("You stand...")
                     break
 
         if player_value > 21:
@@ -179,6 +189,7 @@ def blackjack():
     print(f"The dealers other card is {dealer_hand[1]}")
     print(f"The dealer's hand is of value {dealer_value}.")
     while dealer_value <= 17:
+        time.sleep(0.5)
         card = random.randint(0, len(current_deck) - 1)
         dealer_hand.append(current_deck[card])
         current_deck.pop(card)

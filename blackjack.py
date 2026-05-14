@@ -51,8 +51,12 @@ def blackjack():
 
     print(f"How much do you want to bet?")
     bet = input("$")
+    
     while not bet.isdigit() or int(bet) <= 0 or int(bet) > money:
-        if int(bet) <= money:
+        if not bet.isdigit():
+            print(f"Please input a positive integer. How much do you want to bet?")
+            bet = input("$")
+        elif int(bet) <= money:
             print(f"Please input a positive integer. How much do you want to bet?")
             bet = input("$")
         else:
@@ -100,7 +104,7 @@ def blackjack():
     time.sleep(0.5)
     print(f"You pulled {player_hand[1]}.")
     time.sleep(0.5)
-    print(f"he dealer pulled {dealer_hand[0]}.")
+    print(f"The dealer pulled {dealer_hand[0]}.")
     print(f"Your hand is of value {player_value}.")
 
     if player_blackjack:
@@ -145,9 +149,9 @@ def blackjack():
         if double:
             card = random.randint(0, len(current_deck) - 1)
             player_hand.append(current_deck[card])
-            current_deck.pop(card)
             player_value += value_calc(current_deck[card][0])
             print(f"You drew a {current_deck[card]}.")
+            current_deck.pop(card)
             if player_value > 21 and num_of_ace > 0:
                 player_value -= 10
                 num_of_ace -= 1
@@ -166,11 +170,11 @@ def blackjack():
                 if hit_or_stand.lower() == 'hit':
                     card = random.randint(0, len(current_deck) - 1)
                     player_hand.append(current_deck[card])
-                    current_deck.pop(card)
                     player_value += value_calc(current_deck[card][0])
                     print("You hit...")
                     time.sleep(0.5)
                     print(f"You drew a {current_deck[card]}.")
+                    current_deck.pop(card)
                     if player_value > 21 and num_of_ace > 0:
                         player_value -= 10
                         num_of_ace -= 1
@@ -192,10 +196,10 @@ def blackjack():
         time.sleep(0.5)
         card = random.randint(0, len(current_deck) - 1)
         dealer_hand.append(current_deck[card])
-        current_deck.pop(card)
         dealer_value += value_calc(current_deck[card][0])
         print(f"The dealer drew a {current_deck[card]}")
         print(f"The dealer's hand is of value {dealer_value}.")
+        current_deck.pop(card)
 
     if dealer_value > 21:
         print(f"The dealer bust! You won ${bet}.")

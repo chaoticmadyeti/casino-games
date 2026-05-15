@@ -32,6 +32,7 @@ def wheel_spin():
     curr = random.randint(0, len(wheel) - 1)
     spins = random.randint(60, 80)
     speed = 0.05
+    print("---------Wheel Spinning---------")
     for i in range(spins):
         curr = (curr + 1) % len(wheel)
 
@@ -56,5 +57,8 @@ def wheel_spin():
         time.sleep(speed)
     
     print(f"\nResult: {wheel[curr]}")
+
+print("Hello! Welcome to Python Roulette.")
+print("If you don't know how to play roulette, I highly suggest you do. This game uses the European wheel.")
 
 wheel_spin()

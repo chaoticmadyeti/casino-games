@@ -50,14 +50,8 @@ def wheel_spin():
         sys.stdout.write(f"\r{prev2_display} | {prev1_display} | ---> {centre_display} <--- | {next1_display} | {next2_display}")
         sys.stdout.flush()
 
-        if i > spins * 0.75:
-            speed = 0.1
-        if i > spins * 0.85:
-            speed = 0.3
-        if i > spins * 0.95:
-            speed = 0.5
-        if i > spins - 5:
-            speed = 0.7
+        if i > spins * 0.65:
+            speed *= 1.1
 
         time.sleep(speed)
     

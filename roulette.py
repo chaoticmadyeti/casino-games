@@ -5,7 +5,8 @@ import sys
 # Wheel and colours (European)
 
 wheel = [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26]
-red_numbers = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36] # Black numbers are the numbers that aren't 0 or in the red_numbers list
+red_numbers = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36] 
+black_numbers = [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35]
 half_1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18] # Second half are the numbers that aren't 0 or in the half_1 list
 odd = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35] # Even numbers are the numbers that aren't 0 or in the odd list
 col_1 = [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34]
@@ -13,6 +14,8 @@ col_2 = [2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35] # Column three are the num
 dozen_1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 dozen_2 = [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24] # Dozen 3 are the numbers that aren't 0, in dozen_1 or in dozen_1
 top_line = [0, 1, 2, 3]
+
+bets = ["red", "black"]
 
 # Colourise numbers
 
@@ -63,8 +66,35 @@ def wheel_spin():
         time.sleep(speed)
     
     print(f"\nResult: {wheel[curr]}")
+    return wheel[curr]
+
+# Betting
+
+def bet_type(choice):
+    if choice.lower() == "red":
+        return red_numbers
+    elif choice.lower() == "black":
+        return black_numbers
+    else:
+        return "Unknown"
+
+# Main Logic
+
+def roulette():
+    money = 1000
+    print(f"You have ${money}.")
+    print("What do you want to bet on? Currently, this code has: Red, Black.")
+    type = input("Choice: ")
+    while bet_type(type) == "Unknown":
+        print("Please choose a valid choice. What do you want to bet on? Currently, this code has: Red, Black.")
+        type = input("Choice: ")
+    if wheel_spin() in bet_type(type):
+        print("You win!")
+    else:
+        print("You loose!")
+
 
 print("Hello! Welcome to Python Roulette.")
 print("If you don't know how to play roulette, I highly suggest you do. This game uses the European wheel.")
 
-wheel_spin()
+roulette()

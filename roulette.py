@@ -73,9 +73,11 @@ def wheel_spin():
 def bet_type():
     print("What do you want to bet on? Currently, this code has: Colour.")
     specific_bet = input("Choice: ")
+
     while specific_bet not in bets:
         print("Please choose a valid choice. What do you want to bet on? Currently, this code has: Colour.")
         specific_bet = input("Choice: ")
+    
     if specific_bet.lower() == "colour":
         print("Which colour do you want to bet on?")
         specific_bet = input("Choice: ")
@@ -91,17 +93,40 @@ def bet_type():
 
 def roulette():
     money = 1000
+    
+    while money > 0:
 
-    print(f"You have ${money}.")
-    winning_numbers = bet_type()
+        print(f"You have ${money}.")
+        winning_numbers = bet_type()
 
-    if wheel_spin() in winning_numbers:
-        print("You win!")
-    else:
-        print("You loose!")
+        print("How much do you want to bet on that?")
+        bet = input("$")
+
+        while not bet.isdigit() or int(bet) <= 0 or int(bet) > money:
+            if not bet.isdigit():
+                print(f"Please input a positive integer. How much do you want to bet?")
+                bet = input("$")
+            elif int(bet) <= money:
+                print(f"Please input a positive integer. How much do you want to bet?")
+                bet = input("$")
+            else:
+                print(f"You do not have enough money. How much do you want to bet?")
+                bet = input("$")
+        bet = int(bet)
+
+        if wheel_spin() in winning_numbers:
+            print(f"You win! You win ${bet}")
+            money = money + bet
+        else:
+            print(f"You lost! You lost ${bet}")
+            money = money - bet
 
 
 print("Hello! Welcome to Python Roulette.")
 print("If you don't know how to play roulette, I highly suggest you do. This game uses the European wheel.")
 
 roulette()
+
+print("You ran out of money. Better luck next time!")
+
+# To Do: add other types of bets, add multi betting (bet on multiple types)

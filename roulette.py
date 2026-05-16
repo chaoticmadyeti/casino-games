@@ -15,7 +15,7 @@ dozen_1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 dozen_2 = [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24] # Dozen 3 are the numbers that aren't 0, in dozen_1 or in dozen_1
 top_line = [0, 1, 2, 3]
 
-bets = ["red", "black"]
+bets = ["colour"]
 
 # Colourise numbers
 
@@ -70,25 +70,32 @@ def wheel_spin():
 
 # Betting
 
-def bet_type(choice):
-    if choice.lower() == "red":
-        return red_numbers
-    elif choice.lower() == "black":
-        return black_numbers
-    else:
-        return "Unknown"
+def bet_type():
+    print("What do you want to bet on? Currently, this code has: Colour.")
+    specific_bet = input("Choice: ")
+    while specific_bet not in bets:
+        print("Please choose a valid choice. What do you want to bet on? Currently, this code has: Colour.")
+        specific_bet = input("Choice: ")
+    if specific_bet.lower() == "colour":
+        print("Which colour do you want to bet on?")
+        specific_bet = input("Choice: ")
+        while specific_bet != "red" and specific_bet != "black":
+            print("Please pick a valid colour. Which colour do you want to bet on?")
+            specific_bet = input("Choice: ")
+        if specific_bet.lower() == "red":
+            return red_numbers
+        elif specific_bet.lower() == "black":
+            return black_numbers
 
 # Main Logic
 
 def roulette():
     money = 1000
+
     print(f"You have ${money}.")
-    print("What do you want to bet on? Currently, this code has: Red, Black.")
-    type = input("Choice: ")
-    while bet_type(type) == "Unknown":
-        print("Please choose a valid choice. What do you want to bet on? Currently, this code has: Red, Black.")
-        type = input("Choice: ")
-    if wheel_spin() in bet_type(type):
+    winning_numbers = bet_type()
+
+    if wheel_spin() in winning_numbers:
         print("You win!")
     else:
         print("You loose!")

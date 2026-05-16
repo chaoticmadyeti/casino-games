@@ -1,11 +1,18 @@
 import random
 import time
+import sys
 
 ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 suits = ['Spades', 'Hearts', 'Diamonds', 'Clubs']
 deck = [f"{rank} of {suit}" for suit in suits for rank in ranks]
-money = 1000
 num_of_ace = 0
+
+content = ''
+
+with open("money.txt", "r") as f:
+    content = f.read()
+
+money = int(content)
 
 def value_calc(i):
     global num_of_ace
@@ -49,18 +56,23 @@ def blackjack():
 
     # Bet handling
 
-    print(f"How much do you want to bet?")
+    print(f"How much do you want to bet? (Type 'exit' to quit)")
     bet = input("$")
     
     while not bet.isdigit() or int(bet) <= 0 or int(bet) > money:
+        if bet.lower() == "exit":
+            print("Exiting...")
+            with open("money.txt", "w") as f:
+                f.write(str(money))
+            sys.exit()
         if not bet.isdigit():
-            print(f"Please input a positive integer. How much do you want to bet?")
+            print(f"Please input a positive integer. How much do you want to bet? (Type 'exit' to quit)")
             bet = input("$")
         elif int(bet) <= money:
-            print(f"Please input a positive integer. How much do you want to bet?")
+            print(f"Please input a positive integer. How much do you want to bet? (Type 'exit' to quit)")
             bet = input("$")
         else:
-            print(f"You do not have enough money. How much do you want to bet?")
+            print(f"You do not have enough money. How much do you want to bet? (Type 'exit' to quit)")
             bet = input("$")
     bet = int(bet)
 
@@ -231,6 +243,9 @@ print("Note: Cents do not exist in this game. All decimals will be rounded down,
 while money > 0:
     blackjack()
 
-print("You ran out of money. Better luck next time!")
+with open("money.txt", "w") as f:
+    f.write(0)
+
+print("You ran out of money. Please go to 'money.txt' to reset.")
 
 # To do: splitting

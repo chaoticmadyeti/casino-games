@@ -18,6 +18,13 @@ top_line = [0, 1, 2, 3]
 
 bets = ["colour", "parity"]
 
+content = ''
+
+with open("money.txt", "r") as f:
+    content = f.read()
+
+money = int(content)
+
 # Colourise numbers
 
 def colour(number):
@@ -72,11 +79,18 @@ def wheel_spin():
 # Betting
 
 def bet_type():
-    print("What do you want to bet on?")
+    global money
+
+    print("What do you want to bet on? (Type 'exit' to quit)")
     print("Currently, this code has: Colour, Parity.")
     specific_bet = input("Choice: ")
 
     while specific_bet not in bets:
+        if specific_bet.lower() == "exit":
+            print("Exiting...")
+            with open("money.txt", "w") as f:
+                f.write(str(money))
+            sys.exit()
         print("Please choose a valid choice. What do you want to bet on?")
         print("Currently, this code has: Colour, Parity.")
         specific_bet = input("Choice: ")
@@ -98,10 +112,10 @@ def bet_type():
     
     elif specific_bet.lower() == "parity":
         print("Which parity do you want to bet on?")
-        specific_bet = input("Choice:")
+        specific_bet = input("Choice: ")
         while specific_bet != "odd" and specific_bet != "even":
             print("Please pick a valid parity. Which colour do you want to bet on?")
-            specific_bet = input("Choice:")
+            specific_bet = input("Choice: ")
         if specific_bet.lower() == "odd":
             return odd
         elif specific_bet.lower() == "even":
@@ -110,7 +124,7 @@ def bet_type():
 # Main Logic
 
 def roulette():
-    money = 1000
+    global money
     
     while money > 0:
 
@@ -145,6 +159,9 @@ print("If you don't know how to play roulette, I highly suggest you do. This gam
 
 roulette()
 
-print("You ran out of money. Better luck next time!")
+with open("money.txt", "w") as f:
+    f.write(str(money))
+
+print("You ran out of money. Please go to 'money.txt' to reset.")
 
 # To Do: add other types of bets, add multi betting (bet on multiple types)

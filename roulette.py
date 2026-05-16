@@ -8,14 +8,15 @@ wheel = [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 
 red_numbers = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36] 
 black_numbers = [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35]
 half_1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18] # Second half are the numbers that aren't 0 or in the half_1 list
-odd = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35] # Even numbers are the numbers that aren't 0 or in the odd list
+odd = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35] 
+even = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36]
 col_1 = [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34]
 col_2 = [2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35] # Column three are the numbers that aren't 0, in col_1, or in col_2
 dozen_1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 dozen_2 = [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24] # Dozen 3 are the numbers that aren't 0, in dozen_1 or in dozen_1
 top_line = [0, 1, 2, 3]
 
-bets = ["colour"]
+bets = ["colour", "parity"]
 
 # Colourise numbers
 
@@ -71,12 +72,16 @@ def wheel_spin():
 # Betting
 
 def bet_type():
-    print("What do you want to bet on? Currently, this code has: Colour.")
+    print("What do you want to bet on?")
+    print("Currently, this code has: Colour, Parity.")
     specific_bet = input("Choice: ")
 
     while specific_bet not in bets:
-        print("Please choose a valid choice. What do you want to bet on? Currently, this code has: Colour.")
+        print("Please choose a valid choice. What do you want to bet on?")
+        print("Currently, this code has: Colour, Parity.")
         specific_bet = input("Choice: ")
+
+    # Colour bets
     
     if specific_bet.lower() == "colour":
         print("Which colour do you want to bet on?")
@@ -88,6 +93,19 @@ def bet_type():
             return red_numbers
         elif specific_bet.lower() == "black":
             return black_numbers
+        
+    # Parity bets
+    
+    elif specific_bet.lower() == "parity":
+        print("Which parity do you want to bet on?")
+        specific_bet = input("Choice:")
+        while specific_bet != "odd" and specific_bet != "even":
+            print("Please pick a valid parity. Which colour do you want to bet on?")
+            specific_bet = input("Choice:")
+        if specific_bet.lower() == "odd":
+            return odd
+        elif specific_bet.lower() == "even":
+            return even
 
 # Main Logic
 

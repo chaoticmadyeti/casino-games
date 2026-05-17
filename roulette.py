@@ -7,7 +7,8 @@ import sys
 wheel = [0, 32, 15, 19, 4, 21, 2, 25, 17, 34, 6, 27, 13, 36, 11, 30, 8, 23, 10, 5, 24, 16, 33, 1, 20, 14, 31, 9, 22, 18, 29, 7, 28, 12, 35, 3, 26]
 red_numbers = [1, 3, 5, 7, 9, 12, 14, 16, 18, 19, 21, 23, 25, 27, 30, 32, 34, 36] 
 black_numbers = [2, 4, 6, 8, 10, 11, 13, 15, 17, 20, 22, 24, 26, 28, 29, 31, 33, 35]
-half_1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18] # Second half are the numbers that aren't 0 or in the half_1 list
+half_1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18] 
+half_2 = [19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36]
 odd = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35] 
 even = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36]
 col_1 = [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34]
@@ -16,7 +17,7 @@ dozen_1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 dozen_2 = [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24] # Dozen 3 are the numbers that aren't 0, in dozen_1 or in dozen_1
 top_line = [0, 1, 2, 3]
 
-bets = ["colour", "parity"]
+bets = ["colour", "parity", "half"]
 
 content = ''
 
@@ -82,7 +83,7 @@ def bet_type():
     global money
 
     print("What do you want to bet on? (Type 'exit' to quit)")
-    print("Currently, this code has: Colour, Parity.")
+    print("Currently, this code has: Colour, Parity, Half.")
     specific_bet = input("Choice: ")
 
     while specific_bet not in bets:
@@ -100,7 +101,7 @@ def bet_type():
     if specific_bet.lower() == "colour":
         print("Which colour do you want to bet on?")
         specific_bet = input("Choice: ")
-        while specific_bet != "red" and specific_bet != "black":
+        while specific_bet.lower() != "red" and specific_bet.lower() != "black":
             print("Please pick a valid colour. Which colour do you want to bet on?")
             specific_bet = input("Choice: ")
         if specific_bet.lower() == "red":
@@ -113,13 +114,33 @@ def bet_type():
     elif specific_bet.lower() == "parity":
         print("Which parity do you want to bet on?")
         specific_bet = input("Choice: ")
-        while specific_bet != "odd" and specific_bet != "even":
-            print("Please pick a valid parity. Which colour do you want to bet on?")
+        while specific_bet.lower() != "odd" and specific_bet.lower() != "even":
+            print("Please pick a valid parity. Which parity do you want to bet on?")
             specific_bet = input("Choice: ")
         if specific_bet.lower() == "odd":
             return odd
         elif specific_bet.lower() == "even":
             return even
+    
+    # Half bets
+
+    elif specific_bet.lower() == "half":
+        print("Which half do you want to bet on?")
+        print("1. 1-18")
+        print("2. 19-36")
+        print("(Type 1-2)")
+        specific_bet = input("Choice: ")
+        while specific_bet.lower() != "1" and specific_bet.lower() != "2":
+            print("Please pick an option from 1-2. Which half do you want to bet on?")
+            print("1. 1-18")
+            print("2. 19-36")
+            print("(Type 1-2)")
+            specific_bet = input("Choice: ")
+        if specific_bet.lower() == "1":
+            return half_1
+        elif specific_bet.lower() == "2":
+            return half_2
+
 
 # Main Logic
 

@@ -12,12 +12,14 @@ half_2 = [19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36
 odd = [1, 3, 5, 7, 9, 11, 13, 15, 17, 19, 21, 23, 25, 27, 29, 31, 33, 35] 
 even = [2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36]
 col_1 = [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34]
-col_2 = [2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35] # Column three are the numbers that aren't 0, in col_1, or in col_2
+col_2 = [2, 5, 8, 11, 14, 17, 20, 23, 26, 29, 32, 35] 
+col_3 = [3, 6, 9, 12, 15, 18, 21, 24, 27, 30, 33, 36]
 dozen_1 = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-dozen_2 = [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24] # Dozen 3 are the numbers that aren't 0, in dozen_1 or in dozen_1
+dozen_2 = [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24] 
+dozen_3 = [25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36]
 top_line = [0, 1, 2, 3]
 
-bets = ["colour", "parity", "half"]
+bets = ["colour", "parity", "half", "column"]
 
 content = ''
 
@@ -25,6 +27,7 @@ with open("money.txt", "r") as f:
     content = f.read()
 
 money = int(content)
+multi = 1
 
 # Colourise numbers
 
@@ -81,9 +84,10 @@ def wheel_spin():
 
 def bet_type():
     global money
+    global multi
 
     print("What do you want to bet on? (Type 'exit' to quit)")
-    print("Currently, this code has: Colour, Parity, Half.")
+    print("Currently, this code has: Colour, Parity, Half, Column.")
     specific_bet = input("Choice: ")
 
     while specific_bet.lower() not in bets:
@@ -93,12 +97,13 @@ def bet_type():
                 f.write(str(money))
             sys.exit()
         print("Please choose a valid choice. What do you want to bet on?")
-        print("Currently, this code has: Colour, Parity, Half.")
+        print("Currently, this code has: Colour, Parity, Half, Column.")
         specific_bet = input("Choice: ")
 
     # Colour bets
     
     if specific_bet.lower() == "colour":
+        multi = 1
         print("Which colour do you want to bet on?")
         specific_bet = input("Choice: ")
         while specific_bet.lower() != "red" and specific_bet.lower() != "black":
@@ -112,6 +117,7 @@ def bet_type():
     # Parity bets
     
     elif specific_bet.lower() == "parity":
+        multi = 1
         print("Which parity do you want to bet on?")
         specific_bet = input("Choice: ")
         while specific_bet.lower() != "odd" and specific_bet.lower() != "even":
@@ -125,27 +131,53 @@ def bet_type():
     # Half bets
 
     elif specific_bet.lower() == "half":
+        multi = 1
         print("Which half do you want to bet on?")
         print("1. 1-18")
         print("2. 19-36")
         print("(Type 1-2)")
         specific_bet = input("Choice: ")
         while specific_bet.lower() != "1" and specific_bet.lower() != "2":
-            print("Please pick an option from 1-2. Which half do you want to bet on?")
+            print("Please pick an option from 1 - 2. Which half do you want to bet on?")
             print("1. 1-18")
             print("2. 19-36")
-            print("(Type 1-2)")
+            print("(Type an option from 1 - 2)")
             specific_bet = input("Choice: ")
         if specific_bet.lower() == "1":
             return half_1
         elif specific_bet.lower() == "2":
             return half_2
+    
+    # Column Bets
+
+    elif specific_bet.lower() == "column":
+        multi = 2
+        print("Which column do you want to bet on?")
+        print("1. 1, 4, 7...")
+        print("2. 2, 5, 8...")
+        print("3. 3, 6, 9...")
+        print("(Type an option from 1 - 3)")
+        specific_bet = input("Choice: ")
+        while specific_bet.lower() not in ['1', '2', '3']:
+            print("Please pick an option from 1 - 3. Which column do you want to bet on?")
+            print("1. 1, 4, 7...")
+            print("2. 2, 5, 8...")
+            print("3. 3, 6, 9...")
+            print("(Type 1 - 3)")
+            specific_bet = input("Choice: ")
+        if specific_bet.lower() == '1':
+            return col_1
+        elif specific_bet == '2':
+            return col_2
+        elif specific_bet == '3':
+            return col_3
 
 
 # Main Logic
 
 def roulette():
     global money
+    global multi
     
     while money > 0:
 
@@ -169,7 +201,7 @@ def roulette():
 
         if wheel_spin() in winning_numbers:
             print(f"You win! You win ${bet}")
-            money = money + bet
+            money = money + (bet * multi)
         else:
             print(f"You lost! You lost ${bet}")
             money = money - bet

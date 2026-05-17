@@ -86,14 +86,14 @@ def bet_type():
     print("Currently, this code has: Colour, Parity, Half.")
     specific_bet = input("Choice: ")
 
-    while specific_bet not in bets:
+    while specific_bet.lower() not in bets:
         if specific_bet.lower() == "exit":
             print("Exiting...")
             with open("money.txt", "w") as f:
                 f.write(str(money))
             sys.exit()
         print("Please choose a valid choice. What do you want to bet on?")
-        print("Currently, this code has: Colour, Parity.")
+        print("Currently, this code has: Colour, Parity, Half.")
         specific_bet = input("Choice: ")
 
     # Colour bets

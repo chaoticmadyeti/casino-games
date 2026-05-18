@@ -1,10 +1,12 @@
 # Casino Games
 
-A fun collection of a variety of casino games, all coded in Python.
+A fun collection of a variety of casino games, all coded in Python. Made for Horizons Hackclub 2026.
 
-To play, simply run any file in the terminal. Money is stored in the "money.txt" file, so make sure that file is in the same folder as the game you want to play.
+To play, simply run any file in the terminal. Money is stored in the "money.txt" file, so make sure that file is in the same folder as the game you want to play, so the code can access it.
 
-Please note that this is a only a fun project used for entertainment purposes only. Please gamble responsibly in real life.
+Some sections of the code may have been inspired by responses from LLMs, but all code is ultimately written and debugged by me.
+
+Please note that this is a only a fun project made for entertainment purposes only. Please gamble responsibly in real life.
 
 ## Changelog
 - **2026-05-16**: Added money that carries over games.

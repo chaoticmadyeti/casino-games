@@ -19,7 +19,7 @@ dozen_2 = [13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24]
 dozen_3 = [25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36]
 top_line = [0, 1, 2, 3]
 
-bets = ["colour", "parity", "half", "column"]
+bets = ["colour", "parity", "half", "column", "dozen"]
 
 content = ''
 
@@ -87,7 +87,7 @@ def bet_type():
     global multi
 
     print("What do you want to bet on? (Type 'exit' to quit)")
-    print("Currently, this code has: Colour, Parity, Half, Column.")
+    print("Currently, this code has: Colour, Parity, Half, Column, Dozen.")
     specific_bet = input("Choice: ")
 
     while specific_bet.lower() not in bets:
@@ -96,8 +96,8 @@ def bet_type():
             with open("money.txt", "w") as f:
                 f.write(str(money))
             sys.exit()
-        print("Please choose a valid choice. What do you want to bet on?")
-        print("Currently, this code has: Colour, Parity, Half, Column.")
+        print("Please choose a valid choice. What do you want to bet on? (Type 'exit' to quit)")
+        print("Currently, this code has: Colour, Parity, Half, Column, Dozen.")
         specific_bet = input("Choice: ")
 
     # Colour bets
@@ -135,7 +135,7 @@ def bet_type():
         print("Which half do you want to bet on?")
         print("1. 1-18")
         print("2. 19-36")
-        print("(Type 1-2)")
+        print("(Type an option from 1 - 2)")
         specific_bet = input("Choice: ")
         while specific_bet.lower() != "1" and specific_bet.lower() != "2":
             print("Please pick an option from 1 - 2. Which half do you want to bet on?")
@@ -163,7 +163,7 @@ def bet_type():
             print("1. 1, 4, 7...")
             print("2. 2, 5, 8...")
             print("3. 3, 6, 9...")
-            print("(Type 1 - 3)")
+            print("(Type and option from 1 - 3)")
             specific_bet = input("Choice: ")
         if specific_bet.lower() == '1':
             return col_1
@@ -171,6 +171,30 @@ def bet_type():
             return col_2
         elif specific_bet == '3':
             return col_3
+    
+    # Dozen Bets
+
+    elif specific_bet.lower() == "dozen":
+        multi = 2
+        print("Which dozen do you want to bet on?")
+        print("1. 1 - 12")
+        print("2. 13 - 24")
+        print("3. 25 - 36")
+        print("(Type an option from 1 - 3)")
+        specific_bet = input("Choice: ")
+        while specific_bet.lower() not in ['1', '2', '3']:
+            print("Please pick an option from 1 - 3. Which dozen do you want to bet on?")
+            print("1. 1 - 12")
+            print("2. 13 - 24")
+            print("3. 25 - 36")
+            print("(Type an option from 1 - 3)")
+            specific_bet = input("Choice")
+        if specific_bet.lower() == '1':
+            return dozen_1
+        elif specific_bet == '2':
+            return dozen_2
+        elif specific_bet == '3':
+            return dozen_3
 
 
 # Main Logic

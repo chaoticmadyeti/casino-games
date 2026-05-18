@@ -8,8 +8,7 @@ Some sections of the code may have been inspired by responses from LLMs, but all
 
 Please note that this is a only a fun project made for entertainment purposes only. Please gamble responsibly in real life.
 
-## Changelog
+## Project Timeline:
 - **2026-05-16**: Added money that carries over games.
-- **2026-05-14**: Roulette file created, wheel spin coded.
-- **2026-05-13**: Repo, VS Code, and files updated to be more consistent.
+- **2026-05-14**: Roulette game started.
 - **2026-05-12**: Project began. Repo created. Blackjack game started.

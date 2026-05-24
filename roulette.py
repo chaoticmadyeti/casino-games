@@ -18,9 +18,11 @@ dozen_1 = ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12']
 dozen_2 = ['13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24'] 
 dozen_3 = ['25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36']
 streets = [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9'], ['10', '11', '12'], ['13', '14', '15'], ['16', '17', '18'], ['19', '20', '21'], ['22', '23', '24'], ['25', '26', '27'], ['28', '29', '30'], ['31', '32', '33'], ['34', '35', '36']]
+splits_vertical = [['1', '4'], ['4', '7'], ['7', '10'], ['10', '13'], ['13', '16'], ['16', '19'], ['19', '22'], ['22', '25'], ['25', '28'], ['28', '31'], ['31', '34'], ['2', '5'], ['5', '8'], ['8', '11'], ['11', '14'], ['14', '17'], ['17', '20'], ['20', '23'], ['23', '26'], ['26', '29'], ['29', '32'], ['32', '35'], ['3', '6'], ['6', '9'], ['9', '12'], ['12', '15'], ['15', '18'], ['18', '21'], ['21', '24'], ['24', '27'], ['27', '30'], ['30', '33'], ['33', '36']]
+splits_horizontal = [['1', '2'], ['2', '3'], ['4', '5'], ['5', '6'], ['7', '8'], ['8', '9'], ['10', '11'], ['11', '12'], ['13', '14'], ['14', '15'], ['16', '17'], ['17', '18'], ['19', '20'], ['20', '21'], ['22', '23'], ['23', '24'], ['25', '26'], ['26', '27'], ['28', '29'], ['29', '30'], ['31', '32'], ['32', '33'], ['34', '35'], ['35', '36']]
 top_line = ['0', '1', '2', '3']
 
-bets = ["colour", "parity", "half", "column", "dozen", "double street", "top line"]
+bets = ["colour", "parity", "half", "column", "dozen", "double street", "top line", "corner"]
 
 content = ''
 
@@ -90,7 +92,7 @@ def bet_type():
     global multi
 
     print("What do you want to bet on? (Type 'exit' to quit)")
-    print("Currently, this code has: Colour, Parity, Half, Column, Dozen, Double Street, Top Line.")
+    print("Currently, this code has: Colour, Parity, Half, Column, Dozen, Double Street, Top Line, Corner.")
     specific_bet = input("Choice: ")
 
     while specific_bet.lower() not in bets:
@@ -100,7 +102,7 @@ def bet_type():
                 f.write(str(money))
             sys.exit()
         print("Please choose a valid choice. What do you want to bet on? (Type 'exit' to quit)")
-        print("Currently, this code has: Colour, Parity, Half, Column, Dozen, Double Street, Top Line.")
+        print("Currently, this code has: Colour, Parity, Half, Column, Dozen, Double Street, Top Line, Corner.")
         specific_bet = input("Choice: ")
 
     # Colour bets
@@ -217,6 +219,19 @@ def bet_type():
     elif specific_bet.lower() == "top line":
         multi = 8
         return top_line
+    
+    # Corner Bets
+
+    elif specific_bet.lower() == "corner":
+        multi = 8
+        print("Please type the lowest number in the corner you would like the bet on.")
+        specific_bet = input("Choice: ")
+        while specific_bet.lower() not in ['1', '2', '4', '5', '7', '8', '10', '11', '13', '14', '16', '17', '19', '20', '22', '23', '25', '26', '28', '29', '31', '32']:
+            print("That is not a valid number. Please type the lowest number in the corner you would like to bet on.")
+            specific_bet = input("Choice: ")
+        for i in range(len(splits_horizontal) - 2):
+            if splits_horizontal[i][0] == specific_bet.lower():
+                return splits_horizontal[i] + splits_horizontal[i + 2]
 
 # Main Logic
 
@@ -253,7 +268,7 @@ def roulette():
 
 
 print("Hello! Welcome to Python Roulette.")
-print("If you don't know how to play roulette, I highly suggest you do. This game uses the European wheel.")
+print("If you don't know how to play roulette, I highly suggest you learn how to play beforehand. This game uses the European wheel.")
 
 roulette()
 

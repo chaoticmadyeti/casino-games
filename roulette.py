@@ -20,7 +20,7 @@ dozen_3 = ['25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36
 streets = [['1', '2', '3'], ['4', '5', '6'], ['7', '8', '9'], ['10', '11', '12'], ['13', '14', '15'], ['16', '17', '18'], ['19', '20', '21'], ['22', '23', '24'], ['25', '26', '27'], ['28', '29', '30'], ['31', '32', '33'], ['34', '35', '36']]
 top_line = ['0', '1', '2', '3']
 
-bets = ["colour", "parity", "half", "column", "dozen", "double street"]
+bets = ["colour", "parity", "half", "column", "dozen", "double street", "top line"]
 
 content = ''
 
@@ -90,7 +90,7 @@ def bet_type():
     global multi
 
     print("What do you want to bet on? (Type 'exit' to quit)")
-    print("Currently, this code has: Colour, Parity, Half, Column, Dozen, Double Street.")
+    print("Currently, this code has: Colour, Parity, Half, Column, Dozen, Double Street, Top Line.")
     specific_bet = input("Choice: ")
 
     while specific_bet.lower() not in bets:
@@ -100,7 +100,7 @@ def bet_type():
                 f.write(str(money))
             sys.exit()
         print("Please choose a valid choice. What do you want to bet on? (Type 'exit' to quit)")
-        print("Currently, this code has: Colour, Parity, Half, Column, Dozen.")
+        print("Currently, this code has: Colour, Parity, Half, Column, Dozen, Double Street, Top Line.")
         specific_bet = input("Choice: ")
 
     # Colour bets
@@ -211,7 +211,12 @@ def bet_type():
         for i in range(len(streets) - 1):
             if streets[i][0] == specific_bet.lower():
                 return streets[i] + streets[i + 1]
+    
+    # Top Line Bets
 
+    elif specific_bet.lower() == "top line":
+        multi = 8
+        return top_line
 
 # Main Logic
 

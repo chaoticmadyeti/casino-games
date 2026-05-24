@@ -193,7 +193,7 @@ def bet_type():
             print("2. 13 - 24")
             print("3. 25 - 36")
             print("(Type an option from 1 - 3)")
-            specific_bet = input("Choice")
+            specific_bet = input("Choice: ")
         if specific_bet.lower() == '1':
             return dozen_1
         elif specific_bet == '2':
@@ -226,9 +226,26 @@ def bet_type():
         multi = 8
         print("Please type the lowest number in the corner you would like the bet on.")
         specific_bet = input("Choice: ")
-        while specific_bet.lower() not in ['1', '2', '4', '5', '7', '8', '10', '11', '13', '14', '16', '17', '19', '20', '22', '23', '25', '26', '28', '29', '31', '32']:
+        while specific_bet.lower() not in ['0', '1', '2', '4', '5', '7', '8', '10', '11', '13', '14', '16', '17', '19', '20', '22', '23', '25', '26', '28', '29', '31', '32']:
             print("That is not a valid number. Please type the lowest number in the corner you would like to bet on.")
             specific_bet = input("Choice: ")
+        if specific_bet.lower() == '0':
+            multi = 11
+            print("Which corner (trio) do you want to bet on?")
+            print("1. 0-1-2")
+            print("2. 0-2-3")
+            print("(Type an option from 1 - 2)")
+            specific_bet = input("Choice: ")
+            while specific_bet.lower() not in ['1', '2']:
+                print("Please pick an option from 1 - 2. Which corner (trio) do you want to bet on?")
+                print("1. 0-1-2")
+                print("2. 0-2-3")
+                print("(Type an option from 1 - 2)")
+                specific_bet = input("Choice: ")
+            if specific_bet.lower() == '1':
+                return ['0', '1', '2']
+            elif specific_bet.lower() == '2':
+                return ['0', '2', '3']
         for i in range(len(splits_horizontal) - 2):
             if splits_horizontal[i][0] == specific_bet.lower():
                 return splits_horizontal[i] + splits_horizontal[i + 2]

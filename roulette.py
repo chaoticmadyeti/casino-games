@@ -253,7 +253,7 @@ def bet_type():
     # Street Bets
 
     elif specific_bet.lower() == "street":
-        multi = 5
+        multi = 11
         print("Please type the lowest number in the street you would like to bet on.")
         specific_bet = input("Choice: ")
         while specific_bet.lower() not in col_1:

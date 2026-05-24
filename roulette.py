@@ -22,7 +22,7 @@ splits_vertical = [['1', '4'], ['4', '7'], ['7', '10'], ['10', '13'], ['13', '16
 splits_horizontal = [['1', '2'], ['2', '3'], ['4', '5'], ['5', '6'], ['7', '8'], ['8', '9'], ['10', '11'], ['11', '12'], ['13', '14'], ['14', '15'], ['16', '17'], ['17', '18'], ['19', '20'], ['20', '21'], ['22', '23'], ['23', '24'], ['25', '26'], ['26', '27'], ['28', '29'], ['29', '30'], ['31', '32'], ['32', '33'], ['34', '35'], ['35', '36']]
 top_line = ['0', '1', '2', '3']
 
-bets = ["colour", "parity", "half", "column", "dozen", "double street", "top line", "corner"]
+bets = ["colour", "parity", "half", "column", "dozen", "double street", "top line", "corner", "street"]
 
 content = ''
 
@@ -77,8 +77,8 @@ def wheel_spin():
         sys.stdout.write(f"\r{prev2_display} | {prev1_display} | ---> {centre_display} <--- | {next1_display} | {next2_display}")
         sys.stdout.flush()
 
-        if i > spins * 0.65:
-            speed *= 1.1
+        if i > spins * 0.7:
+            speed *= 1.15
 
         time.sleep(speed)
     
@@ -92,7 +92,7 @@ def bet_type():
     global multi
 
     print("What do you want to bet on? (Type 'exit' to quit)")
-    print("Currently, this code has: Colour, Parity, Half, Column, Dozen, Double Street, Top Line, Corner.")
+    print("Currently, this code has: Colour, Parity, Half, Column, Dozen, Double Street, Top Line, Corner, Street.")
     specific_bet = input("Choice: ")
 
     while specific_bet.lower() not in bets:
@@ -102,7 +102,7 @@ def bet_type():
                 f.write(str(money))
             sys.exit()
         print("Please choose a valid choice. What do you want to bet on? (Type 'exit' to quit)")
-        print("Currently, this code has: Colour, Parity, Half, Column, Dozen, Double Street, Top Line, Corner.")
+        print("Currently, this code has: Colour, Parity, Half, Column, Dozen, Double Street, Top Line, Corner, Street.")
         specific_bet = input("Choice: ")
 
     # Colour bets
@@ -207,7 +207,7 @@ def bet_type():
         multi = 5
         print("Please type the lowest number in the double street you would like to bet on.")
         specific_bet = input("Choice: ")
-        while specific_bet.lower() not in col_1:
+        while specific_bet.lower() not in ['1', '4', '7', '10', '13', '16', '19', '22', '25', '28', '31']:
             print("That is not a valid number. Please type the lowest number in the double street you would like to bet on.")
             specific_bet = input("Choice: ")
         for i in range(len(streets) - 1):
@@ -249,6 +249,19 @@ def bet_type():
         for i in range(len(splits_horizontal) - 2):
             if splits_horizontal[i][0] == specific_bet.lower():
                 return splits_horizontal[i] + splits_horizontal[i + 2]
+            
+    # Street Bets
+
+    elif specific_bet.lower() == "street":
+        multi = 5
+        print("Please type the lowest number in the street you would like to bet on.")
+        specific_bet = input("Choice: ")
+        while specific_bet.lower() not in col_1:
+            print("That is not a valid number. Please type the lowest number in the street you would like to bet on.")
+            specific_bet = input("Choice: ")
+        for i in range(len(streets)):
+            if streets[i][0] == specific_bet.lower():
+                return streets[i]
 
 # Main Logic
 

@@ -29,12 +29,16 @@ content = ''
 with open("money.txt", "r") as f:
     content = f.read()
 
-money = int(content)
+if content.isdigit():
+    money = int(content)
+else:
+    print("Please put a positive integer in 'money.txt'")
+    sys.exit()
 multi = 1
 
 # Colourise numbers
 
-def colour(number):
+def colour(number): 
 
     # Background colours (ANSI)
 

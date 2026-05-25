@@ -12,7 +12,12 @@ content = ''
 with open("money.txt", "r") as f:
     content = f.read()
 
-money = int(content)
+if content.isdigit():
+    money = int(content)
+else:
+    print("Please put a positive integer in 'money.txt'")
+    sys.exit()
+multi = 1
 
 def value_calc(i):
     global num_of_ace

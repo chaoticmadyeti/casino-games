@@ -22,7 +22,7 @@ splits_vertical = [['1', '4'], ['4', '7'], ['7', '10'], ['10', '13'], ['13', '16
 splits_horizontal = [['1', '2'], ['2', '3'], ['4', '5'], ['5', '6'], ['7', '8'], ['8', '9'], ['10', '11'], ['11', '12'], ['13', '14'], ['14', '15'], ['16', '17'], ['17', '18'], ['19', '20'], ['20', '21'], ['22', '23'], ['23', '24'], ['25', '26'], ['26', '27'], ['28', '29'], ['29', '30'], ['31', '32'], ['32', '33'], ['34', '35'], ['35', '36']]
 top_line = ['0', '1', '2', '3']
 
-bets = ["colour", "parity", "half", "column", "dozen", "double street", "top line", "corner", "street", "split"]
+bets = ["colour", "parity", "half", "column", "dozen", "double street", "top line", "corner", "street", "split", "straight up"]
 
 content = ''
 
@@ -92,7 +92,7 @@ def bet_type():
     global multi
 
     print("What do you want to bet on? (Type 'exit' to quit)")
-    print("Currently, this code has: Colour, Parity, Half, Column, Dozen, Double Street, Top Line, Corner, Street, Split.")
+    print("Currently, this code has: Colour, Parity, Half, Column, Dozen, Double Street, Top Line, Corner, Street, Split, Straight Up.")
     specific_bet = input("Choice: ")
 
     while specific_bet.lower() not in bets:
@@ -102,7 +102,7 @@ def bet_type():
                 f.write(str(money))
             sys.exit()
         print("Please choose a valid choice. What do you want to bet on? (Type 'exit' to quit)")
-        print("Currently, this code has: Colour, Parity, Half, Column, Dozen, Double Street, Top Line, Corner, Street, Split.")
+        print("Currently, this code has: Colour, Parity, Half, Column, Dozen, Double Street, Top Line, Corner, Street, Split, Straight Up.")
         specific_bet = input("Choice: ")
 
     # Colour bets
@@ -279,6 +279,17 @@ def bet_type():
             nums = [num_1, num_2]
             nums.sort()
         return nums
+    
+    # Straight Up Bets
+
+    elif specific_bet.lower() == "straight up":
+        multi = 35
+        print("Please type the number you would like to bet on.")
+        specific_bet = input("Choice: ")
+        while specific_bet not in wheel:
+            print("That is not a valid number. Please type the number you would like to bet on.")
+            specific_bet = input("Choice: ")
+        return [specific_bet]
 
 # Main Logic
 
@@ -324,4 +335,4 @@ with open("money.txt", "w") as f:
 
 print("You ran out of money. Please go to 'money.txt' to reset.")
 
-# To Do: add other types of bets, add multi betting (bet on multiple types)
+# To Do: add multi betting (bet on multiple types)

@@ -22,7 +22,7 @@ splits_vertical = [['1', '4'], ['4', '7'], ['7', '10'], ['10', '13'], ['13', '16
 splits_horizontal = [['1', '2'], ['2', '3'], ['4', '5'], ['5', '6'], ['7', '8'], ['8', '9'], ['10', '11'], ['11', '12'], ['13', '14'], ['14', '15'], ['16', '17'], ['17', '18'], ['19', '20'], ['20', '21'], ['22', '23'], ['23', '24'], ['25', '26'], ['26', '27'], ['28', '29'], ['29', '30'], ['31', '32'], ['32', '33'], ['34', '35'], ['35', '36']]
 top_line = ['0', '1', '2', '3']
 
-bets = ["colour", "parity", "half", "column", "dozen", "double street", "top line", "corner", "street"]
+bets = ["colour", "parity", "half", "column", "dozen", "double street", "top line", "corner", "street", "split"]
 
 content = ''
 
@@ -92,7 +92,7 @@ def bet_type():
     global multi
 
     print("What do you want to bet on? (Type 'exit' to quit)")
-    print("Currently, this code has: Colour, Parity, Half, Column, Dozen, Double Street, Top Line, Corner, Street.")
+    print("Currently, this code has: Colour, Parity, Half, Column, Dozen, Double Street, Top Line, Corner, Street, Split.")
     specific_bet = input("Choice: ")
 
     while specific_bet.lower() not in bets:
@@ -102,7 +102,7 @@ def bet_type():
                 f.write(str(money))
             sys.exit()
         print("Please choose a valid choice. What do you want to bet on? (Type 'exit' to quit)")
-        print("Currently, this code has: Colour, Parity, Half, Column, Dozen, Double Street, Top Line, Corner, Street.")
+        print("Currently, this code has: Colour, Parity, Half, Column, Dozen, Double Street, Top Line, Corner, Street, Split.")
         specific_bet = input("Choice: ")
 
     # Colour bets
@@ -262,6 +262,23 @@ def bet_type():
         for i in range(len(streets)):
             if streets[i][0] == specific_bet.lower():
                 return streets[i]
+
+    # Split Bets
+
+    elif specific_bet.lower() == "split":
+        multi = 17
+        print("Please type the two numbers in the split you would like to bet on.")
+        num_1 = input("Number 1: ")
+        num_2 = input("Number 2: ")
+        nums = [num_1, num_2]
+        nums.sort()
+        while nums not in splits_horizontal + splits_vertical:
+            print("That is not a valid pair. Please type the two numbers in the split you would like to bet on.")
+            num_1 = input("Number 1: ")
+            num_2 = input("Number 2: ")
+            nums = [num_1, num_2]
+            nums.sort()
+        return nums
 
 # Main Logic
 

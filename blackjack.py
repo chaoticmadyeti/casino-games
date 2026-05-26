@@ -17,7 +17,6 @@ if content.isdigit():
 else:
     print("Please put a positive integer in 'money.txt'")
     sys.exit()
-multi = 1
 
 def value_calc(i):
     global num_of_ace

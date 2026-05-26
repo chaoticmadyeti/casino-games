@@ -1,10 +1,19 @@
 import random
 import time
 import sys
+import itertools
 
 ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 suits = ['Spades', 'Hearts', 'Diamonds', 'Clubs']
-deck = [f"{rank} of {suit}" for suit in suits for rank in ranks]
+
+# Card class
+
+class card:
+    def __init__(self, suit, rank):
+        self.suit = suit
+        self.rank = rank
+
+deck = [card(suit=s, rank=r) for s in suits for r in ranks]
 
 money = 0
 
@@ -51,8 +60,6 @@ def pair(cards):
 # Find hand value
 
 def check_value(cards):
-    # How the hand values are stored:
-    # value = ['card value name', 'high card', 'secondary card (if not applicable, this will be 0)']
     pass
 
 # Check who wins

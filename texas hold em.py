@@ -41,6 +41,14 @@ else:
     print("Please put a positive integer in 'money.txt'")
     sys.exit()
 
+# Check flush
+
+def flush(cards):
+    for card in cards:
+        if card.suit != cards[0].suit:
+            return False
+    return True
+
 # Find value of the cards
 
 def eval_hand(cards):

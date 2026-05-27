@@ -13,7 +13,18 @@ class card:
         self.suit = suit
         self.rank = rank
 
+# Player class
+
+class player:
+    def __init__(self, id, hole_cards, score):
+        self.id = id # ID number 1 will be the human player.
+        self.hole_cards = hole_cards
+        self.score = score
+
 deck = [card(suit=s, rank=r) for s in suits for r in ranks]
+
+bot_list = ["Robert", "Patrick", "John", "Harry"]
+bot_money = [1000, 1000, 1000, 1000] # Will randomise both names and money amounts at start of game, these are just placeholder
 
 money = 0
 
@@ -28,60 +39,19 @@ else:
     print("Please put a positive integer in 'money.txt'")
     sys.exit()
 
-# Check hand and community cards combination
+# Find value of the cards
 
-def royal_flush(cards):
+def eval_hand(cards):
     pass
 
-def straight_flush(cards):
+# Rank all players from best to worst (we need to rank all players to deal with side pots down the line)
+
+def find_winner(community_cards, players):
     pass
 
-def four_of_a_kind(cards):
-    pass
-
-def full_house(cards):
-    pass
-
-def flush(cards):
-    pass
-
-def straight(cards):
-    pass
-
-def three_of_a_kind(cards):
-    pass
-
-def two_pair(cards):
-    pass
-
-def pair(cards):
-    pass
-
-# Find hand value
-
-def check_value(cards):
-    pass
-
-# Check who wins
-
-def showdown(all_player_hands): 
-    # all_player_hands is an array of all players at the end
-
-    # Call check_value() on every hand and determine who wins
-    pass
-
-# Handle money
-
-def bet_handling(pots): 
-    # Array of all pots, includes side pots
-    # Determine who gets how much money
-    pass
-
-# Core loop
+# Core betting logic
 
 def texas_hold_em():
-    # Handles the dealing of cards, betting in each round etc. (aka all of the text stuff that actually shows up on screen)
-    # All above functions are no-text (no print() functions)
     pass
 
 texas_hold_em()

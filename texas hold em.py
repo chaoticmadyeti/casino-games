@@ -104,16 +104,70 @@ def pair(frequency):
             return True
     return False
 
+def get_rank_of_size(frequency, target_num):
+    for i in range(len(frequency)):
+        if frequency[i] == target_num:
+            return i
+
 # Find value of the cards
 
 def eval_hand(cards):
-    pass
+    rank_frequency = card_frequency(cards)
+    if flush(cards) and straight(cards):
+        # Straight Flush (includes Royal Flush)
+        return [9, cards[0]]
+    elif four_of_a_kind(rank_frequency):
+        # Four of a kind
+        four_of_a_kind_card = get_rank_of_size(rank_frequency, 4)
+        kicker = get_rank_of_size(rank_frequency, 1)
+        return [8, four_of_a_kind_card, kicker]
+    elif three_of_a_kind(rank_frequency) and pair(rank_frequency):
+        # Full House
+        three_of_a_kind_card = get_rank_of_size(rank_frequency, 3)
+        pair_card = get_rank_of_size(rank_frequency, 2)
+        return [7, three_of_a_kind_card, pair_card]
+    elif flush(cards):
+        # Flush
+        return [6, cards[0].rank, cards[1].rank, cards[2].rank, cards[3].rank, cards[4].rank]
+    elif straight(cards):
+        # Straight
+        return [5, cards[0].rank]
+    elif three_of_a_kind(rank_frequency):
+        # Three of a kind
+        three_of_a_kind_card = get_rank_of_size(rank_frequency, 3)
+        hand_value = [4, three_of_a_kind_card]
+        for card in cards:
+            if card.rank != three_of_a_kind_card:
+                hand_value.append(card.rank)
+        return hand_value
+    elif two_pair(rank_frequency):
+        # Two pair
+        lower_pair_card = get_rank_of_size(rank_frequency, 2)
+        rank_frequency.reverse()
+        higher_pair_card = get_rank_of_size(rank_frequency, 2)
+        rank_frequency.reverse()
+        kicker = get_rank_of_size(rank_frequency, 1)
+        return [3, higher_pair_card, lower_pair_card, kicker]
+    elif pair(rank_frequency):
+        # Pair
+        pair_card = get_rank_of_size(rank_frequency, 2)
+        hand_value = [2, pair_card]
+        for card in cards:
+            if card.rank != pair_card:
+                hand_value.append(card.rank)
+        return hand_value
+    else:
+        # High Card
+        return [1, cards[0].rank, cards[1].rank, cards[2].rank, cards[3].rank, cards[4].rank]
+
 
 # Rank all players from best to worst (we need to rank all players to deal with side pots down the line)
 
 def find_winner(community_cards, players):
     for player in players:
         all_cards = community_cards + player.hole_cards
+        all_cards.sort(key = lambda card: card.rank, reverse=True)
+
         combinations = itertools.combinations(all_cards, 5)
 
         best_score = [0]

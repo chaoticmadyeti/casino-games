@@ -5,7 +5,7 @@ import itertools
 
 ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 rank_value = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
-suits = ['Spades', 'Hearts', 'Diamonds', 'Clubs']
+suits = ['♠', '♥', '♦', '♣']
 
 # Card class
 
@@ -26,9 +26,6 @@ class player:
 
 deck = [card(suit=s, rank=r) for s in suits for r in rank_value]
 
-bot_list = ["Robert", "Patrick", "John", "Harry"]
-bot_money = [1000, 1000, 1000, 1000] # Will randomise both names and money amounts at start of game, these are just placeholder
-
 money = 0
 
 content = ''
@@ -41,6 +38,35 @@ if content.isdigit():
 else:
     print("Please put a positive integer in 'money.txt'")
     sys.exit()
+
+name_list = ["Player", "Robert", "Patrick", "John", "Harry"]
+money_list = [money, 1000, 1000, 1000, 1000] # Will randomise bot names and money amounts at start of game, these are just placeholder
+
+# Interface for the table (placeholder information for now)
+# Reminder to add similar interfaces to the other games
+
+def table_interface(pots, players, community_cards):
+    print(f"======================================================================")
+    print(f"TEXAS HOLD 'EM")
+    print(f"----------------------------------------------------------------------")
+    print(f"TOTAL POT: $1000")
+    print(f"├── [Main Pot]   $600  (All Players)")
+    print(f"└── [Side Pot 1] $400  (Player, Bot1)")
+    print(f"CURRENT BET: $200")
+    print(f"----------------------------------------------------------------------")
+    print(f"COMMUNITY CARDS: 4♠, J♦, 5♣, ??, ??")
+    print(f"----------------------------------------------------------------------")
+    print(f"OPPONENTS: ")
+    print(f" • BOT1 ($500) |  CARDS: ??, ?? | ACTION: FOLD")
+    print(f" • BOT2 ($200) |  CARDS: ??, ?? | ACTION: CHECK")
+    print(f"----------------------------------------------------------------------")
+    print(f"YOUR CARDS: K♥, K♠")
+    print(f"YOUR MONEY: $300")
+    print(f"----------------------------------------------------------------------")
+    # Lines below change based on status (this is for choosing an action, it can also be for round over, raising amounts, and error screens). The lines above will never change layout
+    print(f"Actions Available: Fold (1) | Check/Call (2) | Raise (3)")
+    input(f"Choose Your Action: ")
+    print(f"======================================================================")
 
 # Check straight
 

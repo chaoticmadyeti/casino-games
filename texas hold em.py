@@ -63,6 +63,14 @@ def flush(cards):
             return False
     return True
 
+# Check rank frequences (needed for three of a kind etc.)
+
+def card_frequency(cards):
+    frequency = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    for card in cards:
+        frequency[card.rank] += 1
+    return frequency
+
 # Find value of the cards
 
 def eval_hand(cards):

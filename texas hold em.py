@@ -71,6 +71,14 @@ def card_frequency(cards):
         frequency[card.rank] += 1
     return frequency
 
+# Check four of a kind
+
+def four_of_a_kind(frequency):
+    for i in frequency:
+        if i == 4:
+            return True
+    return False
+
 # Find value of the cards
 
 def eval_hand(cards):

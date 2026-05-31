@@ -79,6 +79,31 @@ def four_of_a_kind(frequency):
             return True
     return False
 
+# Check three of a kind
+
+def three_of_a_kind(frequency):
+    for i in frequency:
+        if i == 3:
+            return True
+    return False
+
+# Check two pair
+
+def two_pair(frequency):
+    cnt = 0
+    for i in frequency:
+        if i == 2:
+            cnt += 1
+    return cnt >= 2
+
+# Check pair
+
+def pair(frequency):
+    for i in frequency:
+        if i == 2:
+            return True
+    return False
+
 # Find value of the cards
 
 def eval_hand(cards):

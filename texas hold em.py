@@ -41,6 +41,7 @@ else:
 
 name_list = ["Player", "Robert", "Patrick", "John", "Harry"]
 money_list = [money, 1000, 1000, 1000, 1000] # Will randomise bot names and money amounts at start of game, these are just placeholder
+player_list = [player(id=1, hole_cards=[], score=0), player(id=2, hole_cards=[], score=0), player(id=3, hole_cards=[], score=0), player(id=4, hole_cards=[], score=0), player(id=5, hole_cards=[], score=0),]
 
 # Interface for the table (placeholder information for now)
 # Reminder to add similar interfaces to the other games
@@ -62,11 +63,10 @@ def table_interface(pots, players, community_cards):
     print(f"----------------------------------------------------------------------")
     print(f"YOUR CARDS: K♥, K♠")
     print(f"YOUR MONEY: $300")
-    print(f"----------------------------------------------------------------------")
+    print(f"======================================================================")
     # Lines below change based on status (this is for choosing an action, it can also be for round over, raising amounts, and error screens). The lines above will never change layout
     print(f"Actions Available: Fold (1) | Check/Call (2) | Raise (3)")
     input(f"Choose Your Action: ")
-    print(f"======================================================================")
 
 # Check straight
 
@@ -204,17 +204,41 @@ def find_winner(community_cards, players):
                 if current_score[i] > best_score[i]:
                     best_score = current_score
                     break
+                elif current_score[i] < best_score[i]:
+                    break
         
         player.score = best_score
 
-    sorted_players = sorted(players, reverse=True)
+    sorted_players = sorted(players, key = lambda player: player.score, reverse=True)
 
     return sorted_players
 
 
 # Core betting logic
 
-def texas_hold_em():
-    pass
+def texas_hold_em(player_list):
 
-texas_hold_em()
+    # Print statements added to make sure the code is working, delete it later
+
+    current_deck = deck.copy()
+    community_cards = []
+    for i in range(5):
+        card = random.randint(0, len(current_deck) - 1)
+        community_cards.append(current_deck[card])
+        current_deck.pop(card)
+        print(f"{community_cards[i].rank}{community_cards[i].suit}")
+    for player in player_list:
+        card = random.randint(0, len(current_deck) - 1)
+        player.hole_cards.append(current_deck[card])
+        current_deck.pop(card)
+        card = random.randint(0, len(current_deck) - 1)
+        player.hole_cards.append(current_deck[card])
+        current_deck.pop(card)
+        print(f"{player.hole_cards[0].rank}{player.hole_cards[0].suit}, {player.hole_cards[1].rank}{player.hole_cards[1].suit}")
+    
+    player_ranking = find_winner(community_cards, player_list)
+
+    for player in player_ranking:
+        print(f"{player.id} - {player.score}")
+
+texas_hold_em(player_list)

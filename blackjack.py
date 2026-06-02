@@ -3,7 +3,7 @@ import time
 import sys
 
 ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
-suits = ['Spades', 'Hearts', 'Diamonds', 'Clubs']
+suits = ['♠', '♥', '♦', '♣']
 deck = [f"{rank} of {suit}" for suit in suits for rank in ranks]
 num_of_ace = 0
 
@@ -43,6 +43,18 @@ def value_calc(i):
     else:
         val += 10
     return val
+
+# Interface for the table (placeholder information for now)
+
+def interface():
+    print(f"======================================================================")
+    print(f"BlACKJACK | BET: $1000")
+    print(f"----------------------------------------------------------------------")
+    print(f"DEALER CARDS: J♦, ??")
+    print(f"YOUR CARDS: K♥, 4♠, 5♣")
+    print(f"----------------------------------------------------------------------")
+    print(f"Actions Available: Hit (1) | Stand(1)")
+    input(f"Choose Your Action: ")
 
 def blackjack():
     global money

@@ -1,6 +1,7 @@
 import random
 import time
 import sys
+import os
 
 ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 suits = ['♠', '♥', '♦', '♣']
@@ -46,15 +47,26 @@ def value_calc(i):
 
 # Interface for the table (placeholder information for now)
 
-def interface():
+def interface(bet, player_hand, dealer_hand, money, situation):
     print(f"======================================================================")
-    print(f"BlACKJACK | BET: $1000")
+    print(f"BlACKJACK | BET: ${bet} | YOUR BALANCE: {money}")
     print(f"----------------------------------------------------------------------")
-    print(f"DEALER CARDS: J♦, ??")
-    print(f"YOUR CARDS: K♥, 4♠, 5♣")
+    if situation == "bet":
+        print(f"DEALER CARDS: ??, ??")
+        print(f"YOUR CARDS: ??, ??")
+    else:
+        if situation != "end":
+            print(f"DEALER CARDS: {dealer_hand[0]}, ??")
+        else:
+            print(f"DEALER CARDS: ", end="", flush=True)
+            for card in range(len(dealer_hand) - 1):
+                print(f"{dealer_hand[card]}, ", end="", flush=True)
+            print(f"{dealer_hand[len(dealer_hand) - 1]}")
+        print(f"YOUR CARDS: ", end="", flush=True)
+        for card in range(len(player_hand) - 1):
+            print(f"{player_hand[card]}, ", end="", flush=True)
+        print(f"{player_hand[len(dealer_hand) - 1]}")
     print(f"----------------------------------------------------------------------")
-    print(f"Actions Available: Hit (1) | Stand(1)")
-    input(f"Choose Your Action: ")
 
 def blackjack():
     global money
@@ -71,6 +83,8 @@ def blackjack():
     dealer_blackjack = False
 
     # Bet handling
+
+    interface("??", [], [], money, "bet")
 
     print(f"How much do you want to bet? (Type 'exit' to quit)")
     bet = input("$")
@@ -260,7 +274,7 @@ while money > 0:
     blackjack()
 
 with open("money.txt", "w") as f:
-    f.write(0)
+    f.write("0")
 
 print("You ran out of money. Please go to 'money.txt' to reset.")
 

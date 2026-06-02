@@ -83,7 +83,9 @@ def blackjack():
 
     # Bet handling
 
-    interface("??", [], [], money, "bet")
+    bet = 0
+
+    interface("??", [], [], money - bet, "bet")
 
     print(f"How much do you want to bet? (Type 'exit' to quit)")
     bet = input("$")
@@ -95,15 +97,15 @@ def blackjack():
                 f.write(str(money))
             sys.exit()
         if not bet.isdigit():
-            interface("??", [], [], money, "bet")
+            interface("??", [], [], money - bet, "bet")
             print(f"Please input a positive integer. How much do you want to bet? (Type 'exit' to quit)")
             bet = input("$")
         elif int(bet) <= money:
-            interface("??", [], [], money, "bet")
+            interface("??", [], [], money - bet, "bet")
             print(f"Please input a positive integer. How much do you want to bet? (Type 'exit' to quit)")
             bet = input("$")
         else:
-            interface("??", [], [], money, "bet")
+            interface("??", [], [], money - bet, "bet")
             print(f"You do not have enough money. How much do you want to bet? (Type 'exit' to quit)")
             bet = input("$")
     bet = int(bet)
@@ -142,10 +144,11 @@ def blackjack():
 
     # Dealing and revealing to the player
 
-    interface(bet, player_hand, dealer_hand, money, "drawing")
+    interface(bet, player_hand, dealer_hand, money - bet, "drawing")
 
     print("Cards have been drawn (see above).")
     print(f"Your hand is of value {player_value}.")
+    input("Press Enter to continue... ")
 
     if player_blackjack:
         print("Blackjack!")
@@ -155,33 +158,35 @@ def blackjack():
         # Handling insurance
 
         if dealer_hand[0][0] == 'A':
-            interface(bet, player_hand, dealer_hand, money, "insurance")
+            interface(bet, player_hand, dealer_hand, money - bet, "insurance")
             print("Would you like to pay for insurance? (Y/N)")
             insurance_choice = input("Choice: ")
-            while insurance_choice.upper() != 'Y' and double_choice.upper() != 'N':
-                interface(bet, player_hand, dealer_hand, money, "insurance")
+            while insurance_choice.upper() != 'Y' and insurance_choice.upper() != 'N':
+                interface(bet, player_hand, dealer_hand, money - bet, "insurance")
                 print("Please input either 'Y' or 'N'. Would you like to pay for insurance? (Y/N)")
                 insurance_choice = input("Choice: ")
             if insurance_choice.upper() == 'Y':
                 if dealer_blackjack:
-                    interface(bet, player_hand, dealer_hand, money, "end")
+                    interface(bet, player_hand, dealer_hand, money - bet, "end")
                     print("The dealer had a blackjack! Your insurance paid off.")
+                    input("Press Enter to continue... ")
                     return
                 else:
-                    interface(bet, player_hand, dealer_hand, money, "insurance")
+                    interface(bet, player_hand, dealer_hand, money - bet, "insurance")
                     print(f"The dealer doesn't have a blackjack. Your insurance (${bet // 2}) is lost.")
+                    input("Press Enter to continue... ")
                     money -= bet // 2
 
 
         # Handling doubling
 
-        interface(bet, player_hand, dealer_hand, money, "doubling")
+        interface(bet, player_hand, dealer_hand, money - bet, "doubling")
         double = False
         if bet <= money // 2:
             print("Do you want to double (Y/N)?")
             double_choice = input("Choice: ")
             while double_choice.upper() != 'Y' and double_choice.upper() != 'N':
-                interface(bet, player_hand, dealer_hand, money, "doubling")
+                interface(bet, player_hand, dealer_hand, money - bet, "doubling")
                 print("Please input either 'Y' or 'N'. Do you want to double (Y/N)?")
                 double_choice = input("Choice: ")
             if double_choice.upper() == 'Y':
@@ -189,11 +194,12 @@ def blackjack():
                 double = True
         else:
             print("You do not have enough money to double.")
+            input("Press Enter to continue... ")
 
         # Hitting and standing 
 
-        interface(bet, player_hand, dealer_hand, money, "hit_and_stand")
         if double:
+            interface(bet, player_hand, dealer_hand, money - bet, "hit_and_stand")
             card = random.randint(0, len(current_deck) - 1)
             player_hand.append(current_deck[card])
             player_value += value_calc(current_deck[card][0])
@@ -209,10 +215,11 @@ def blackjack():
         else:
             hit_or_stand = ''
             while player_value <= 21:
+                interface(bet, player_hand, dealer_hand, money - bet, "hit_and_stand")
                 print("Hit or stand?")
                 hit_or_stand = input("Choice: ")
                 while hit_or_stand.lower() != 'hit' and hit_or_stand.lower() != 'stand':
-                    interface(bet, player_hand, dealer_hand, money, "hit_and_stand")
+                    interface(bet, player_hand, dealer_hand, money - bet, "hit_and_stand")
                     print("Please input either 'hit' or 'stand'. Hit or stand?")
                     hit_or_stand = input("Choice: ")
                 if hit_or_stand.lower() == 'hit':
@@ -227,19 +234,21 @@ def blackjack():
                         player_value -= 10
                         num_of_ace -= 1
                     print(f"Your hand is of value {player_value}.")
+                    input("Press Enter to continue... ")
                 else:
                     print("You stand...")
                     break
 
         if player_value > 21:
-            interface(bet, player_hand, dealer_hand, money, "end")
-            print(f"You bust! You lost ${bet}.")
             money = money - bet
+            interface(bet, player_hand, dealer_hand, money - bet, "end")
+            print(f"You bust! You lost ${bet}.")
+            input("Press Enter to continue... ")
             return
 
     # Dealer reveal and draw
 
-    interface(bet, player_hand, dealer_hand, money, "end")
+    interface(bet, player_hand, dealer_hand, money - bet, "end")
     print(f"The dealers other card is {dealer_hand[1]}")
     print(f"The dealer's hand is of value {dealer_value}.")
     while dealer_value <= 17:
@@ -253,6 +262,7 @@ def blackjack():
 
     if dealer_value > 21:
         print(f"The dealer bust! You won ${bet}.")
+        input("Press Enter to continue... ")
         money = money + bet
         return
 
@@ -260,17 +270,22 @@ def blackjack():
 
     if dealer_blackjack and player_blackjack:
         print("You tied! Nothing happens.")
+        input("Press Enter to continue... ")
     elif dealer_blackjack:
         print(f"You lost! You lost ${bet}.")
+        input("Press Enter to continue... ")
         money = money - bet
     elif dealer_value > player_value:
         print(f"You lost! You lost ${bet}.")
+        input("Press Enter to continue... ")
         money = money - bet
     elif dealer_value < player_value:
         print(f"You won! You won ${bet}.")
+        input("Press Enter to continue... ")
         money = money + bet
     else:
         print("You tied! Nothing happens.")
+        input("Press Enter to continue... ")
 
 # Main blackjack logic:
 

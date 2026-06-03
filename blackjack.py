@@ -1,5 +1,4 @@
 import random
-import time
 import sys
 import os
 
@@ -77,7 +76,8 @@ def interface(bet, player_hand, dealer_hand, money, situation):
 def blackjack():
     global money
     global deck
-    global num_of_ace
+    global num_of_ace_player
+    global num_of_ace_dealer
 
     current_deck = deck.copy()
     player_hand = []
@@ -273,6 +273,7 @@ def blackjack():
         current_deck.pop(card)
 
     if dealer_value > 21:
+        interface(bet, player_hand, dealer_hand, money, "end")
         print(f"The dealer bust! You won ${bet}.")
         input("Press Enter to continue... ")
         money = money + bet
@@ -301,10 +302,11 @@ def blackjack():
         input("Press Enter to continue... ")
 
 # Main blackjack logic:
-
-print("Hello! Welcome to Python Blackjack.")
-print("If you don't know how to play blackjack, I highly suggest you do. This game goes by American rules.")
-print("Note: Cents do not exist in this game. All decimals will be rounded down, to favour the house.")
+if __name__ == "__main__":
+    print("Hello! Welcome to Python Blackjack.")
+    print("If you don't know how to play blackjack, I highly suggest you do. This game goes by American rules.")
+    print("Note: Cents do not exist in this game. All decimals will be rounded down, to favour the house.")
+    input("Press Enter to play... ")
 
 while money > 0:
     blackjack()

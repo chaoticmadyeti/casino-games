@@ -6,7 +6,8 @@ import os
 ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 suits = ['♠', '♥', '♦', '♣']
 deck = [f"{rank}{suit}" for suit in suits for rank in ranks]
-num_of_ace = 0
+num_of_ace_player = 0
+num_of_ace_dealer = 0
 
 content = ''
 
@@ -19,8 +20,9 @@ else:
     print("Please put a positive integer in 'money.txt'")
     sys.exit()
 
-def value_calc(i):
-    global num_of_ace
+def value_calc(i, person):
+    global num_of_ace_player
+    global num_of_ace_dealer
     val = 0
     if i == '2':
         val += 2
@@ -40,7 +42,10 @@ def value_calc(i):
         val += 9
     elif i == 'A':
         val += 11
-        num_of_ace += 1
+        if person == "player":
+            num_of_ace_player += 1
+        else:
+            num_of_ace_dealer += 1
     else:
         val += 10
     return val
@@ -50,7 +55,7 @@ def value_calc(i):
 def interface(bet, player_hand, dealer_hand, money, situation):
     os.system('cls' if os.name == 'nt' else 'clear')
     print(f"======================================================================")
-    print(f"BlACKJACK | BET: ${bet} | YOUR BALANCE: {money}")
+    print(f"BlACKJACK | BET: ${bet} | YOUR BALANCE: ${money}")
     print(f"----------------------------------------------------------------------")
     if situation == "bet":
         print(f"DEALER CARDS: ??, ??")
@@ -77,7 +82,8 @@ def blackjack():
     current_deck = deck.copy()
     player_hand = []
     dealer_hand = []
-    num_of_ace = 0
+    num_of_ace_player = 0
+    num_of_ace_dealer = 0
     player_blackjack = False
     dealer_blackjack = False
 
@@ -85,7 +91,7 @@ def blackjack():
 
     bet = 0
 
-    interface("??", [], [], money - bet, "bet")
+    interface("??", [], [], money, "bet")
 
     print(f"How much do you want to bet? (Type 'exit' to quit)")
     bet = input("$")
@@ -97,15 +103,15 @@ def blackjack():
                 f.write(str(money))
             sys.exit()
         if not bet.isdigit():
-            interface("??", [], [], money - bet, "bet")
+            interface("??", [], [], money, "bet")
             print(f"Please input a positive integer. How much do you want to bet? (Type 'exit' to quit)")
             bet = input("$")
         elif int(bet) <= money:
-            interface("??", [], [], money - bet, "bet")
+            interface("??", [], [], money, "bet")
             print(f"Please input a positive integer. How much do you want to bet? (Type 'exit' to quit)")
             bet = input("$")
         else:
-            interface("??", [], [], money - bet, "bet")
+            interface("??", [], [], money, "bet")
             print(f"You do not have enough money. How much do you want to bet? (Type 'exit' to quit)")
             bet = input("$")
     bet = int(bet)
@@ -121,7 +127,7 @@ def blackjack():
 
     player_value = 0
     for i in player_hand:
-        player_value += value_calc(i[0])
+        player_value += value_calc(i[0], "player")
     
     if player_value == 21:
         player_blackjack = True
@@ -137,14 +143,14 @@ def blackjack():
 
     dealer_value = 0
     for i in dealer_hand:
-        dealer_value += value_calc(i[0])
+        dealer_value += value_calc(i[0], "dealer")
     
     if dealer_value == 21:
         dealer_blackjack = True
 
     # Dealing and revealing to the player
 
-    interface(bet, player_hand, dealer_hand, money - bet, "drawing")
+    interface(bet, player_hand, dealer_hand, money, "drawing")
 
     print("Cards have been drawn (see above).")
     print(f"Your hand is of value {player_value}.")
@@ -158,21 +164,21 @@ def blackjack():
         # Handling insurance
 
         if dealer_hand[0][0] == 'A':
-            interface(bet, player_hand, dealer_hand, money - bet, "insurance")
+            interface(bet, player_hand, dealer_hand, money, "insurance")
             print("Would you like to pay for insurance? (Y/N)")
             insurance_choice = input("Choice: ")
             while insurance_choice.upper() != 'Y' and insurance_choice.upper() != 'N':
-                interface(bet, player_hand, dealer_hand, money - bet, "insurance")
+                interface(bet, player_hand, dealer_hand, money, "insurance")
                 print("Please input either 'Y' or 'N'. Would you like to pay for insurance? (Y/N)")
                 insurance_choice = input("Choice: ")
             if insurance_choice.upper() == 'Y':
                 if dealer_blackjack:
-                    interface(bet, player_hand, dealer_hand, money - bet, "end")
+                    interface(bet, player_hand, dealer_hand, money, "end")
                     print("The dealer had a blackjack! Your insurance paid off.")
                     input("Press Enter to continue... ")
                     return
                 else:
-                    interface(bet, player_hand, dealer_hand, money - bet, "insurance")
+                    interface(bet, player_hand, dealer_hand, money, "insurance")
                     print(f"The dealer doesn't have a blackjack. Your insurance (${bet // 2}) is lost.")
                     input("Press Enter to continue... ")
                     money -= bet // 2
@@ -180,13 +186,13 @@ def blackjack():
 
         # Handling doubling
 
-        interface(bet, player_hand, dealer_hand, money - bet, "doubling")
+        interface(bet, player_hand, dealer_hand, money, "doubling")
         double = False
         if bet <= money // 2:
             print("Do you want to double (Y/N)?")
             double_choice = input("Choice: ")
             while double_choice.upper() != 'Y' and double_choice.upper() != 'N':
-                interface(bet, player_hand, dealer_hand, money - bet, "doubling")
+                interface(bet, player_hand, dealer_hand, money, "doubling")
                 print("Please input either 'Y' or 'N'. Do you want to double (Y/N)?")
                 double_choice = input("Choice: ")
             if double_choice.upper() == 'Y':
@@ -199,65 +205,71 @@ def blackjack():
         # Hitting and standing 
 
         if double:
-            interface(bet, player_hand, dealer_hand, money - bet, "hit_and_stand")
+            interface(bet, player_hand, dealer_hand, money, "hit_and_stand")
             card = random.randint(0, len(current_deck) - 1)
             player_hand.append(current_deck[card])
-            player_value += value_calc(current_deck[card][0])
+            player_value += value_calc(current_deck[card][0], "player")
             print(f"You drew a {current_deck[card]}.")
             current_deck.pop(card)
-            if player_value > 21 and num_of_ace > 0:
+            if player_value > 21 and num_of_ace_player > 0:
                 player_value -= 10
-                num_of_ace -= 1
-            if num_of_ace > 0:
+                num_of_ace_player -= 1
+            if num_of_ace_player > 0:
                 print(f"Your hand is of value {player_value} / {player_value - 10}.")
             else:
                 print(f"Your hand is of value {player_value}.")
         else:
             hit_or_stand = ''
             while player_value <= 21:
-                interface(bet, player_hand, dealer_hand, money - bet, "hit_and_stand")
+                interface(bet, player_hand, dealer_hand, money, "hit_and_stand")
                 print("Hit or stand?")
                 hit_or_stand = input("Choice: ")
                 while hit_or_stand.lower() != 'hit' and hit_or_stand.lower() != 'stand':
-                    interface(bet, player_hand, dealer_hand, money - bet, "hit_and_stand")
+                    interface(bet, player_hand, dealer_hand, money, "hit_and_stand")
                     print("Please input either 'hit' or 'stand'. Hit or stand?")
                     hit_or_stand = input("Choice: ")
                 if hit_or_stand.lower() == 'hit':
                     card = random.randint(0, len(current_deck) - 1)
                     player_hand.append(current_deck[card])
-                    player_value += value_calc(current_deck[card][0])
-                    print("You hit...")
-                    time.sleep(0.5)
+                    player_value += value_calc(current_deck[card][0], "player")
+                    interface(bet, player_hand, dealer_hand, money, "hit_and_stand")
                     print(f"You drew a {current_deck[card]}.")
                     current_deck.pop(card)
-                    if player_value > 21 and num_of_ace > 0:
+                    if player_value > 21 and num_of_ace_player > 0:
                         player_value -= 10
-                        num_of_ace -= 1
-                    print(f"Your hand is of value {player_value}.")
+                        num_of_ace_player -= 1
+                    if num_of_ace_player > 0:
+                        print(f"Your hand is of value {player_value} / {player_value - 10}.")
+                    else:
+                        print(f"Your hand is of value {player_value}.")
                     input("Press Enter to continue... ")
                 else:
-                    print("You stand...")
                     break
 
         if player_value > 21:
             money = money - bet
-            interface(bet, player_hand, dealer_hand, money - bet, "end")
+            interface(bet, player_hand, dealer_hand, money, "end")
             print(f"You bust! You lost ${bet}.")
             input("Press Enter to continue... ")
             return
 
     # Dealer reveal and draw
 
-    interface(bet, player_hand, dealer_hand, money - bet, "end")
+    interface(bet, player_hand, dealer_hand, money, "end")
     print(f"The dealers other card is {dealer_hand[1]}")
     print(f"The dealer's hand is of value {dealer_value}.")
+    input("Press Enter to continue... ")
     while dealer_value <= 17:
-        time.sleep(0.5)
         card = random.randint(0, len(current_deck) - 1)
         dealer_hand.append(current_deck[card])
-        dealer_value += value_calc(current_deck[card][0])
+        dealer_value += value_calc(current_deck[card][0], "dealer")
+        if dealer_value > 21 and num_of_ace_dealer > 0:
+            dealer_value -= 10
+            num_of_ace_dealer -= 1
+        interface(bet, player_hand, dealer_hand, money, "end")
         print(f"The dealer drew a {current_deck[card]}")
         print(f"The dealer's hand is of value {dealer_value}.")
+        input("Press Enter to continue... ")
         current_deck.pop(card)
 
     if dealer_value > 21:
@@ -268,6 +280,7 @@ def blackjack():
 
     # Win check
 
+    interface(bet, player_hand, dealer_hand, money, "end")
     if dealer_blackjack and player_blackjack:
         print("You tied! Nothing happens.")
         input("Press Enter to continue... ")

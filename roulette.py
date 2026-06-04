@@ -112,6 +112,7 @@ def bet_type():
     global money
     global multi
 
+    interface(0, money, [])
     print("What do you want to bet on? (Type 'exit' to quit)")
     print("Currently, this code has: Colour, Parity, Half, Column, Dozen, Double Street, Top Line, Corner, Street, Split, Straight Up.")
     specific_bet = input("Choice: ")
@@ -122,6 +123,7 @@ def bet_type():
             with open("money.txt", "w") as f:
                 f.write(str(money))
             sys.exit()
+        interface(0, money, [])
         print("Please choose a valid choice. What do you want to bet on? (Type 'exit' to quit)")
         print("Currently, this code has: Colour, Parity, Half, Column, Dozen, Double Street, Top Line, Corner, Street, Split, Straight Up.")
         specific_bet = input("Choice: ")
@@ -130,9 +132,11 @@ def bet_type():
     
     if specific_bet.lower() == "colour":
         multi = 1
+        interface(0, money, [])
         print("Which colour do you want to bet on?")
         specific_bet = input("Choice: ")
         while specific_bet.lower() != "red" and specific_bet.lower() != "black":
+            interface(0, money, [])
             print("Please pick a valid colour. Which colour do you want to bet on?")
             specific_bet = input("Choice: ")
         if specific_bet.lower() == "red":
@@ -144,9 +148,11 @@ def bet_type():
     
     elif specific_bet.lower() == "parity":
         multi = 1
+        interface(0, money, [])
         print("Which parity do you want to bet on?")
         specific_bet = input("Choice: ")
         while specific_bet.lower() != "odd" and specific_bet.lower() != "even":
+            interface(0, money, [])
             print("Please pick a valid parity. Which parity do you want to bet on?")
             specific_bet = input("Choice: ")
         if specific_bet.lower() == "odd":
@@ -158,12 +164,14 @@ def bet_type():
 
     elif specific_bet.lower() == "half":
         multi = 1
+        interface(0, money, [])
         print("Which half do you want to bet on?")
         print("1. 1-18")
         print("2. 19-36")
         print("(Type an option from 1 - 2)")
         specific_bet = input("Choice: ")
         while specific_bet.lower() != "1" and specific_bet.lower() != "2":
+            interface(0, money, [])
             print("Please pick an option from 1 - 2. Which half do you want to bet on?")
             print("1. 1-18")
             print("2. 19-36")
@@ -178,6 +186,7 @@ def bet_type():
 
     elif specific_bet.lower() == "column":
         multi = 2
+        interface(0, money, [])
         print("Which column do you want to bet on?")
         print("1. 1, 4, 7...")
         print("2. 2, 5, 8...")
@@ -185,6 +194,7 @@ def bet_type():
         print("(Type an option from 1 - 3)")
         specific_bet = input("Choice: ")
         while specific_bet.lower() not in ['1', '2', '3']:
+            interface(0, money, [])
             print("Please pick an option from 1 - 3. Which column do you want to bet on?")
             print("1. 1, 4, 7...")
             print("2. 2, 5, 8...")
@@ -202,6 +212,7 @@ def bet_type():
 
     elif specific_bet.lower() == "dozen":
         multi = 2
+        interface(0, money, [])
         print("Which dozen do you want to bet on?")
         print("1. 1 - 12")
         print("2. 13 - 24")
@@ -209,6 +220,7 @@ def bet_type():
         print("(Type an option from 1 - 3)")
         specific_bet = input("Choice: ")
         while specific_bet.lower() not in ['1', '2', '3']:
+            interface(0, money, [])
             print("Please pick an option from 1 - 3. Which dozen do you want to bet on?")
             print("1. 1 - 12")
             print("2. 13 - 24")
@@ -226,9 +238,11 @@ def bet_type():
 
     elif specific_bet.lower() == "double street":
         multi = 5
+        interface(0, money, [])
         print("Please type the lowest number in the double street you would like to bet on.")
         specific_bet = input("Choice: ")
         while specific_bet.lower() not in ['1', '4', '7', '10', '13', '16', '19', '22', '25', '28', '31']:
+            interface(0, money, [])
             print("That is not a valid number. Please type the lowest number in the double street you would like to bet on.")
             specific_bet = input("Choice: ")
         for i in range(len(streets) - 1):
@@ -245,19 +259,23 @@ def bet_type():
 
     elif specific_bet.lower() == "corner":
         multi = 8
+        interface(0, money, [])
         print("Please type the lowest number in the corner you would like the bet on.")
         specific_bet = input("Choice: ")
         while specific_bet.lower() not in ['0', '1', '2', '4', '5', '7', '8', '10', '11', '13', '14', '16', '17', '19', '20', '22', '23', '25', '26', '28', '29', '31', '32']:
+            interface(0, money, [])
             print("That is not a valid number. Please type the lowest number in the corner you would like to bet on.")
             specific_bet = input("Choice: ")
         if specific_bet.lower() == '0':
             multi = 11
+            interface(0, money, [])
             print("Which corner (trio) do you want to bet on?")
             print("1. 0-1-2")
             print("2. 0-2-3")
             print("(Type an option from 1 - 2)")
             specific_bet = input("Choice: ")
             while specific_bet.lower() not in ['1', '2']:
+                interface(0, money, [])
                 print("Please pick an option from 1 - 2. Which corner (trio) do you want to bet on?")
                 print("1. 0-1-2")
                 print("2. 0-2-3")
@@ -275,9 +293,11 @@ def bet_type():
 
     elif specific_bet.lower() == "street":
         multi = 11
+        interface(0, money, [])
         print("Please type the lowest number in the street you would like to bet on.")
         specific_bet = input("Choice: ")
         while specific_bet.lower() not in col_1:
+            interface(0, money, [])
             print("That is not a valid number. Please type the lowest number in the street you would like to bet on.")
             specific_bet = input("Choice: ")
         for i in range(len(streets)):
@@ -288,12 +308,14 @@ def bet_type():
 
     elif specific_bet.lower() == "split":
         multi = 17
+        interface(0, money, [])
         print("Please type the two numbers in the split you would like to bet on.")
         num_1 = input("Number 1: ")
         num_2 = input("Number 2: ")
         nums = [num_1, num_2]
         nums.sort()
         while nums not in splits_horizontal + splits_vertical:
+            interface(0, money, [])
             print("That is not a valid pair. Please type the two numbers in the split you would like to bet on.")
             num_1 = input("Number 1: ")
             num_2 = input("Number 2: ")
@@ -305,9 +327,11 @@ def bet_type():
 
     elif specific_bet.lower() == "straight up":
         multi = 35
+        interface(0, money, [])
         print("Please type the number you would like to bet on.")
         specific_bet = input("Choice: ")
         while specific_bet not in wheel:
+            interface(0, money, [])
             print("That is not a valid number. Please type the number you would like to bet on.")
             specific_bet = input("Choice: ")
         return [specific_bet]
@@ -320,9 +344,9 @@ def roulette():
     
     while money > 0:
 
-        print(f"You have ${money}.")
         winning_numbers = bet_type()
 
+        interface(0, money, winning_numbers)
         print("How much do you want to bet on that?")
         bet = input("$")
 
@@ -338,6 +362,7 @@ def roulette():
                 bet = input("$")
         bet = int(bet)
 
+        interface(bet, money, winning_numbers)
         if wheel_spin() in winning_numbers:
             print(f"You win! You win ${bet}")
             money = money + (bet * multi)
@@ -345,9 +370,10 @@ def roulette():
             print(f"You lost! You lost ${bet}")
             money = money - bet
 
-
-print("Hello! Welcome to Python Roulette.")
-print("If you don't know how to play roulette, I highly suggest you learn how to play beforehand. This game uses the European wheel.")
+if __name__ == "__main__":
+    print("Hello! Welcome to Python Roulette.")
+    print("If you don't know how to play roulette, I highly suggest you learn how to play beforehand. This game uses the European wheel.")
+    input("Press Enter to play... ")
 
 roulette()
 

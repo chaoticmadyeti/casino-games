@@ -435,5 +435,3 @@ with open("money.txt", "w") as f:
     f.write(str(money))
 
 print("You ran out of money. Please go to 'money.txt' to reset.")
-
-# To Do: add multi betting (bet on multiple types)

@@ -2,6 +2,11 @@ import random
 import sys
 import os
 
+if getattr(sys, 'frozen', False):
+    exe_dir = os.path.dirname(sys.executable)
+else:
+    exe_dir = os.path.dirname(os.path.abspath(__file__))
+
 ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 suits = ['♠', '♥', '♦', '♣']
 deck = [f"{rank}{suit}" for suit in suits for rank in ranks]

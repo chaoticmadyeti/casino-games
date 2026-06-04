@@ -49,7 +49,7 @@ def value_calc(i, person):
         val += 10
     return val
 
-# Interface for the table (placeholder information for now)
+# Interface for the table
 
 def interface(bet, player_hand, dealer_hand, money, situation):
     os.system('cls' if os.name == 'nt' else 'clear')

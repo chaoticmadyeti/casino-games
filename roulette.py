@@ -1,6 +1,7 @@
 import random
 import time
 import sys
+import os
 
 # Wheel and colours (European)
 
@@ -35,6 +36,16 @@ else:
     print("Please put a positive integer in 'money.txt'")
     sys.exit()
 multi = 1
+
+# Interface for the table
+
+def interface():
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print(f"======================================================================")
+    print(f"ROULETTE | BET: $500 | YOUR BALANCE: $1500")
+    print(f"VALID WINNING NUMBERS: 1, 2, 3")
+    print(f"----------------------------------------------------------------------")
+    # Betting choices and wheel spinning
 
 # Colourise numbers
 

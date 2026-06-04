@@ -39,11 +39,17 @@ multi = 1
 
 # Interface for the table
 
-def interface():
+def interface(bet, money, winning_numbers):
     os.system('cls' if os.name == 'nt' else 'clear')
     print(f"======================================================================")
-    print(f"ROULETTE | BET: $500 | YOUR BALANCE: $1500")
-    print(f"VALID WINNING NUMBERS: 1, 2, 3")
+    print(f"ROULETTE | BET: ${bet} | YOUR BALANCE: ${money}")
+    if winning_numbers == []:
+        print(f"VALID WINNING NUMBERS: N/A")
+    else:
+        print(f"VALID WINNING NUMBERS: ", end="", flush=True)
+        for number in range(len(winning_numbers) - 1):
+            print(f"{winning_numbers[number]}, ", end="", flush=True)
+        print(f"{winning_numbers[len(winning_numbers) - 1]}")
     print(f"----------------------------------------------------------------------")
     # Betting choices and wheel spinning
 

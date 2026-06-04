@@ -44,17 +44,24 @@ multi = 1
 
 # Interface for the table
 
-def interface(bet, money, winning_numbers):
+# (Payout: {all_bets[bet][2]} : 1)
+
+def interface(money, all_bets, total_bet_amount):
     os.system('cls' if os.name == 'nt' else 'clear')
     print(f"======================================================================")
-    print(f"ROULETTE | BET: ${bet} | YOUR BALANCE: ${money}")
-    if winning_numbers == []:
-        print(f"VALID WINNING NUMBERS: N/A")
-    else:
-        print(f"VALID WINNING NUMBERS: ", end="", flush=True)
-        for number in range(len(winning_numbers) - 1):
-            print(f"{winning_numbers[number]}, ", end="", flush=True)
-        print(f"{winning_numbers[len(winning_numbers) - 1]}")
+    print(f"ROULETTE | YOUR BALANCE: ${money}")
+    if all_bets != []:
+        print(f"----------------------------------------------------------------------")
+        print(f"TOTAL BET: ${total_bet_amount}")
+        for bet in range(len(all_bets) - 1):
+            print(f"├── ${all_bets[bet][1]} on ", end="", flush=True)
+            for number in range(len(all_bets[bet][0]) - 1):
+                print(f"{all_bets[bet][0][number]}, ", end="", flush=True)
+            print(f"{all_bets[bet][0][len(all_bets[bet][0]) - 1]} (Payout: {all_bets[bet][2]} : 1)")
+        print(f"└── ${all_bets[len(all_bets) - 1][1]} on ", end="", flush=True)
+        for number in range(len(all_bets[len(all_bets) - 1][0]) - 1):
+            print(f"{all_bets[len(all_bets) - 1][0][number]}, ", end="", flush=True)
+        print(f"{all_bets[len(all_bets) - 1][0][len(all_bets[len(all_bets) - 1][0]) - 1]} (Payout: {all_bets[len(all_bets) - 1][2]} : 1)")
     print(f"----------------------------------------------------------------------")
     # Betting choices and wheel spinning
 
@@ -80,10 +87,11 @@ def colour(number):
 
 # Wheel spin
 
-def wheel_spin():
+def wheel_spin(all_bets, total_bet_amount):
     curr = random.randint(0, len(wheel) - 1)
     spins = random.randint(60, 80)
     speed = 0.05
+    interface(money, all_bets, total_bet_amount)
     print("---------Wheel Spinning---------")
     for i in range(spins):
         curr = (curr + 1) % len(wheel)
@@ -113,11 +121,11 @@ def wheel_spin():
 
 # Betting
 
-def bet_type():
+def bet_type(all_bets, total_bet_amount):
     global money
     global multi
 
-    interface(0, money, [])
+    interface(money, all_bets, total_bet_amount)
     print("What do you want to bet on? (Type 'exit' to quit)")
     print("Currently, this code has: Colour, Parity, Half, Column, Dozen, Double Street, Top Line, Corner, Street, Split, Straight Up.")
     specific_bet = input("Choice: ")
@@ -128,7 +136,7 @@ def bet_type():
             with open("money.txt", "w") as f:
                 f.write(str(money))
             sys.exit()
-        interface(0, money, [])
+        interface(money, all_bets, total_bet_amount)
         print("Please choose a valid choice. What do you want to bet on? (Type 'exit' to quit)")
         print("Currently, this code has: Colour, Parity, Half, Column, Dozen, Double Street, Top Line, Corner, Street, Split, Straight Up.")
         specific_bet = input("Choice: ")
@@ -137,11 +145,11 @@ def bet_type():
     
     if specific_bet.lower() == "colour":
         multi = 1
-        interface(0, money, [])
+        interface(money, all_bets, total_bet_amount)
         print("Which colour do you want to bet on?")
         specific_bet = input("Choice: ")
         while specific_bet.lower() != "red" and specific_bet.lower() != "black":
-            interface(0, money, [])
+            interface(money, all_bets, total_bet_amount)
             print("Please pick a valid colour. Which colour do you want to bet on?")
             specific_bet = input("Choice: ")
         if specific_bet.lower() == "red":
@@ -153,11 +161,11 @@ def bet_type():
     
     elif specific_bet.lower() == "parity":
         multi = 1
-        interface(0, money, [])
+        interface(money, all_bets, total_bet_amount)
         print("Which parity do you want to bet on?")
         specific_bet = input("Choice: ")
         while specific_bet.lower() != "odd" and specific_bet.lower() != "even":
-            interface(0, money, [])
+            interface(money, all_bets, total_bet_amount)
             print("Please pick a valid parity. Which parity do you want to bet on?")
             specific_bet = input("Choice: ")
         if specific_bet.lower() == "odd":
@@ -169,14 +177,14 @@ def bet_type():
 
     elif specific_bet.lower() == "half":
         multi = 1
-        interface(0, money, [])
+        interface(money, all_bets, total_bet_amount)
         print("Which half do you want to bet on?")
         print("1. 1-18")
         print("2. 19-36")
         print("(Type an option from 1 - 2)")
         specific_bet = input("Choice: ")
         while specific_bet.lower() != "1" and specific_bet.lower() != "2":
-            interface(0, money, [])
+            interface(money, all_bets, total_bet_amount)
             print("Please pick an option from 1 - 2. Which half do you want to bet on?")
             print("1. 1-18")
             print("2. 19-36")
@@ -191,7 +199,7 @@ def bet_type():
 
     elif specific_bet.lower() == "column":
         multi = 2
-        interface(0, money, [])
+        interface(money, all_bets, total_bet_amount)
         print("Which column do you want to bet on?")
         print("1. 1, 4, 7...")
         print("2. 2, 5, 8...")
@@ -199,7 +207,7 @@ def bet_type():
         print("(Type an option from 1 - 3)")
         specific_bet = input("Choice: ")
         while specific_bet.lower() not in ['1', '2', '3']:
-            interface(0, money, [])
+            interface(money, all_bets, total_bet_amount)
             print("Please pick an option from 1 - 3. Which column do you want to bet on?")
             print("1. 1, 4, 7...")
             print("2. 2, 5, 8...")
@@ -217,7 +225,7 @@ def bet_type():
 
     elif specific_bet.lower() == "dozen":
         multi = 2
-        interface(0, money, [])
+        interface(money, all_bets, total_bet_amount)
         print("Which dozen do you want to bet on?")
         print("1. 1 - 12")
         print("2. 13 - 24")
@@ -225,7 +233,7 @@ def bet_type():
         print("(Type an option from 1 - 3)")
         specific_bet = input("Choice: ")
         while specific_bet.lower() not in ['1', '2', '3']:
-            interface(0, money, [])
+            interface(money, all_bets, total_bet_amount)
             print("Please pick an option from 1 - 3. Which dozen do you want to bet on?")
             print("1. 1 - 12")
             print("2. 13 - 24")
@@ -243,11 +251,11 @@ def bet_type():
 
     elif specific_bet.lower() == "double street":
         multi = 5
-        interface(0, money, [])
+        interface(money, all_bets, total_bet_amount)
         print("Please type the lowest number in the double street you would like to bet on.")
         specific_bet = input("Choice: ")
         while specific_bet.lower() not in ['1', '4', '7', '10', '13', '16', '19', '22', '25', '28', '31']:
-            interface(0, money, [])
+            interface(money, all_bets, total_bet_amount)
             print("That is not a valid number. Please type the lowest number in the double street you would like to bet on.")
             specific_bet = input("Choice: ")
         for i in range(len(streets) - 1):
@@ -264,23 +272,23 @@ def bet_type():
 
     elif specific_bet.lower() == "corner":
         multi = 8
-        interface(0, money, [])
+        interface(money, all_bets, total_bet_amount)
         print("Please type the lowest number in the corner you would like the bet on.")
         specific_bet = input("Choice: ")
         while specific_bet.lower() not in ['0', '1', '2', '4', '5', '7', '8', '10', '11', '13', '14', '16', '17', '19', '20', '22', '23', '25', '26', '28', '29', '31', '32']:
-            interface(0, money, [])
+            interface(money, all_bets, total_bet_amount)
             print("That is not a valid number. Please type the lowest number in the corner you would like to bet on.")
             specific_bet = input("Choice: ")
         if specific_bet.lower() == '0':
             multi = 11
-            interface(0, money, [])
+            interface(money, all_bets, total_bet_amount)
             print("Which corner (trio) do you want to bet on?")
             print("1. 0-1-2")
             print("2. 0-2-3")
             print("(Type an option from 1 - 2)")
             specific_bet = input("Choice: ")
             while specific_bet.lower() not in ['1', '2']:
-                interface(0, money, [])
+                interface(money, all_bets, total_bet_amount)
                 print("Please pick an option from 1 - 2. Which corner (trio) do you want to bet on?")
                 print("1. 0-1-2")
                 print("2. 0-2-3")
@@ -298,11 +306,11 @@ def bet_type():
 
     elif specific_bet.lower() == "street":
         multi = 11
-        interface(0, money, [])
+        interface(money, all_bets, total_bet_amount)
         print("Please type the lowest number in the street you would like to bet on.")
         specific_bet = input("Choice: ")
         while specific_bet.lower() not in col_1:
-            interface(0, money, [])
+            interface(money, all_bets, total_bet_amount)
             print("That is not a valid number. Please type the lowest number in the street you would like to bet on.")
             specific_bet = input("Choice: ")
         for i in range(len(streets)):
@@ -313,14 +321,14 @@ def bet_type():
 
     elif specific_bet.lower() == "split":
         multi = 17
-        interface(0, money, [])
+        interface(money, all_bets, total_bet_amount)
         print("Please type the two numbers in the split you would like to bet on.")
         num_1 = input("Number 1: ")
         num_2 = input("Number 2: ")
         nums = [num_1, num_2]
         nums.sort()
         while nums not in splits_horizontal + splits_vertical:
-            interface(0, money, [])
+            interface(money, all_bets, total_bet_amount)
             print("That is not a valid pair. Please type the two numbers in the split you would like to bet on.")
             num_1 = input("Number 1: ")
             num_2 = input("Number 2: ")
@@ -332,14 +340,50 @@ def bet_type():
 
     elif specific_bet.lower() == "straight up":
         multi = 35
-        interface(0, money, [])
+        interface(money, all_bets, total_bet_amount)
         print("Please type the number you would like to bet on.")
         specific_bet = input("Choice: ")
         while specific_bet not in wheel:
-            interface(0, money, [])
+            interface(money, all_bets, total_bet_amount)
             print("That is not a valid number. Please type the number you would like to bet on.")
             specific_bet = input("Choice: ")
         return [specific_bet]
+
+# Check if the player wants to be on multiple types
+
+def mutliple_bet_check(all_bets, total_bet_amount):
+    interface(money, all_bets, total_bet_amount)
+    print("Do you want to bet on another type? (Y/N)")
+    choice = input("Choice: ")
+    while choice.upper() != "Y" and choice.upper() != "N":
+        interface(money, all_bets, total_bet_amount)
+        print("Please input either Y or N. Do you want to bet on another type? (Y/N)")
+        choice = input("Choice: ")
+    if choice.upper() == "Y":
+        return True
+    else:
+        return False
+
+# Check how much the player wants to bet on a particular option
+
+def bet_amount_check(all_bets, total_bet_amount):
+    interface(money, all_bets, total_bet_amount)
+    print("How much do you want to bet on that?")
+    bet = input("$")
+
+    while not bet.isdigit() or int(bet) <= 0 or int(bet) > money:
+        interface(money, all_bets, total_bet_amount)
+        if not bet.isdigit():
+            print(f"Please input a positive integer. How much do you want to bet?")
+            bet = input("$")
+        elif int(bet) <= money:
+            print(f"Please input a positive integer. How much do you want to bet?")
+            bet = input("$")
+        else:
+            print(f"You do not have enough money. How much do you want to bet?")
+            bet = input("$")
+    bet = int(bet)
+    return bet
 
 # Main Logic
 
@@ -348,32 +392,37 @@ def roulette():
     global multi
     
     while money > 0:
+        all_bets = []
+        total_bet = 0
 
-        winning_numbers = bet_type()
+        winning_numbers = bet_type(all_bets, total_bet)
+        bet = bet_amount_check(all_bets, total_bet)
+        total_bet += bet
+        all_bets.append([winning_numbers, bet, multi])
+        while mutliple_bet_check(all_bets, total_bet):
+            winning_numbers = bet_type(all_bets, total_bet)
+            bet = bet_amount_check(all_bets, total_bet)
+            total_bet += bet
+            all_bets.append([winning_numbers, bet, multi])
+        
+        number = wheel_spin(all_bets, total_bet)
+        earnings = 0
 
-        interface(0, money, winning_numbers)
-        print("How much do you want to bet on that?")
-        bet = input("$")
-
-        while not bet.isdigit() or int(bet) <= 0 or int(bet) > money:
-            if not bet.isdigit():
-                print(f"Please input a positive integer. How much do you want to bet?")
-                bet = input("$")
-            elif int(bet) <= money:
-                print(f"Please input a positive integer. How much do you want to bet?")
-                bet = input("$")
+        for bets in all_bets:
+            if number in bets[0]:
+                earnings += bets[1] * bets[2]
             else:
-                print(f"You do not have enough money. How much do you want to bet?")
-                bet = input("$")
-        bet = int(bet)
-
-        interface(bet, money, winning_numbers)
-        if wheel_spin() in winning_numbers:
-            print(f"You win! You win ${bet}")
-            money = money + (bet * multi)
+                earnings -= bets[1]
+        
+        if earnings > 0:
+            print(f"You earnt {earnings}.")
+        elif earnings < 0:
+            print(f"You lost {-1 * earnings}.")
         else:
-            print(f"You lost! You lost ${bet}")
-            money = money - bet
+            print(f"You broke even.")
+        money += earnings
+        input("Press Enter to continue... ")
+                
 
 if __name__ == "__main__":
     print("Hello! Welcome to Python Roulette.")

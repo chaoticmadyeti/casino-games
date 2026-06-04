@@ -130,10 +130,19 @@ def pair(frequency):
             return True
     return False
 
+# Get the rank with a certain number of cards (back to front is to check higher pair rank for two pair)
+
 def get_rank_of_size(frequency, target_num):
     for i in range(len(frequency)):
         if frequency[i] == target_num:
             return i
+        
+def get_rank_of_size_back_to_front(frequency, target_num):
+    frequency.reverse()
+    for i in range(len(frequency)):
+        if frequency[i] == target_num:
+            frequency.reverse()
+            return len(frequency) - i - 1
 
 # Find value of the cards
 
@@ -155,9 +164,12 @@ def eval_hand(cards):
     elif flush(cards):
         # Flush
         return [6, cards[0].rank, cards[1].rank, cards[2].rank, cards[3].rank, cards[4].rank]
-    elif straight(cards):
+    elif straight(cards) or cards == [12, 3, 2, 1, 0]:
         # Straight
-        return [5, cards[0].rank]
+        if cards != [12, 3, 2, 1, 0]:
+            return [5, cards[0].rank]
+        else:
+            return [5, 3]
     elif three_of_a_kind(rank_frequency):
         # Three of a kind
         three_of_a_kind_card = get_rank_of_size(rank_frequency, 3)
@@ -169,9 +181,7 @@ def eval_hand(cards):
     elif two_pair(rank_frequency):
         # Two pair
         lower_pair_card = get_rank_of_size(rank_frequency, 2)
-        rank_frequency.reverse()
-        higher_pair_card = get_rank_of_size(rank_frequency, 2)
-        rank_frequency.reverse()
+        higher_pair_card = get_rank_of_size_back_to_front(rank_frequency, 2)
         kicker = get_rank_of_size(rank_frequency, 1)
         return [3, higher_pair_card, lower_pair_card, kicker]
     elif pair(rank_frequency):

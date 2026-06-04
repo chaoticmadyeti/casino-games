@@ -7,6 +7,8 @@ if getattr(sys, 'frozen', False):
 else:
     exe_dir = os.path.dirname(os.path.abspath(__file__))
 
+os.chdir(exe_dir)
+
 ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 suits = ['♠', '♥', '♦', '♣']
 deck = [f"{rank}{suit}" for suit in suits for rank in ranks]

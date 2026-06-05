@@ -9,6 +9,7 @@ Some sections of the code may have been inspired by responses from LLMs, but all
 Please note that this is a only a fun project made for entertainment purposes only. Please gamble responsibly in real life, and seek help if you are dealing with an addiction.
 
 ## Project Timeline:
+- **2026-06-05**: Baccarat (Punto Banco) started.
 - **2026-05-26**: Texas Hold 'Em game started.
 - **2026-05-16**: Added money that carries over games.
 - **2026-05-14**: Roulette game started.

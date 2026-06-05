@@ -27,15 +27,27 @@ else:
 
 # Interface for the table
 
-def interface():
+def interface(player_hand, bank_hand, money, bet, bet_type):
     os.system('cls' if os.name == 'nt' else 'clear')
     print(f"======================================================================")
-    print(f"BACCARACT - PUNTO BANCO | YOUR BALANCE: $500")
+    print(f"BACCARACT - PUNTO BANCO | YOUR BALANCE: ${money}")
     print(f"----------------------------------------------------------------------")
-    print(f"YOUR BET: PLAYER | BET: $200")
+    print(f"YOUR BET: {bet_type} | BET: ${bet}")
     print(f"----------------------------------------------------------------------")
-    print(f"PLAYER CARDS: ??, ?? (VALUE: ?)")
-    print(f"BANK CARDS: ??, ?? (VALUE: ?)")
+    print(f"PLAYER CARDS: ", end="", flush=True)
+    if player_hand == []:
+        print("??, ?? (VALUE: ?)")
+    else:
+        for i in range(len(player_hand) - 1):
+            print(f"{player_hand[i]}, ", end="", flush=True)
+        print(f"{player_hand[-1]} (VALUE: {hand_calc(player_hand)})") # forgot array[-1] existed too accustomed to c++ (reminder to use -1 index from now on)
+    print(f"BANK CARDS: ", end="", flush=True)
+    if bank_hand == []:
+        print("??, ?? (VALUE: ?)")
+    else:
+        for i in range(len(bank_hand) - 1):
+            print(f"{bank_hand[i]}, ", end="", flush=True)
+        print(f"{bank_hand[-1]} (VALUE: {hand_calc(bank_hand)})")
     print(f"----------------------------------------------------------------------")
 
 # Determine value of a card
@@ -51,4 +63,21 @@ def hand_calc(hand):
 # Main logic
 
 def baccarat():
-    pass
+    current_deck = deck.copy()
+
+    player_hand = []
+    bank_hand = []
+
+    card = random.randint(0, len(current_deck) - 1)
+    player_hand.append(current_deck[card])
+    current_deck.pop(card)
+    card = random.randint(0, len(current_deck) - 1)
+    player_hand.append(current_deck[card])
+    current_deck.pop(card)
+
+    card = random.randint(0, len(current_deck) - 1)
+    bank_hand.append(current_deck[card])
+    current_deck.pop(card)
+    card = random.randint(0, len(current_deck) - 1)
+    bank_hand.append(current_deck[card])
+    current_deck.pop(card)

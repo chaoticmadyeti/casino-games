@@ -81,3 +81,31 @@ def baccarat():
     card = random.randint(0, len(current_deck) - 1)
     bank_hand.append(current_deck[card])
     current_deck.pop(card)
+
+    bet = 0
+    bet_type = ""
+
+    print("What do you want to bet on? (Type 'exit' to quit)")
+    bet_type = input("Choice: ")
+    while bet_type.lower() not in ["player", "banker", "tie"]:
+        if bet_type.lower() == 'exit':
+            print("Exiting...")
+            with open("money.txt", "w") as f:
+                f.write(str(money))
+            sys.exit()
+        print("Please choose either 'player', 'banker', or 'tie'. What do you want to bet on? (Type 'exit' to quit)")
+        bet_type = input("Choice: ")
+    
+    print("How much do you want to bet on that?")
+    bet = input("$")
+    while not bet.isdigit() or int(bet) <= 0 or int(bet) > money:
+        if not bet.isdigit():
+            print(f"Please input a positive integer. How much do you want to bet on that?")
+            bet = input("$")
+        elif int(bet) <= money:
+            print(f"Please input a positive integer. How much do you want to bet on that?")
+            bet = input("$")
+        else:
+            print(f"You do not have enough money. How much do you want to bet on that?")
+            bet = input("$")
+    bet = int(bet)

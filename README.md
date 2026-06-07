@@ -2,11 +2,18 @@
 
 A fun collection of a variety of casino games, all coded in Python. Made for Horizons Crux Hackclub 2026.
 
-To play, simply run any file in the terminal (the excecutables will be a Mac native file, both Silicon and Intel are able to use it). Money is stored in the "money.txt" file, so make sure that file is in the same folder as the game you want to play, so the code can access it.
+To play, simply run any file in the terminal by double clicking the executable (the executables will be a Mac native file, both Silicon and Intel are able to use it). Money is stored in the "money.txt" file, so make sure that file is in the same folder as the game you want to play, so the code can access it.
+
+Rules for all of the games comes from their corresponding Wikipedia page. 
 
 Some sections of the code may have been inspired by responses from LLMs, but all code is ultimately written and debugged by me.
 
 Please note that this is a only a fun project made for entertainment purposes only. Please gamble responsibly in real life, and seek help if you are dealing with an addiction.
+
+Some common numbers include:
+- 1-800-GAMBLER (USA)
+- 0808 8020 133 (UK)
+- 1800 858 858 (Australia)
 
 ## Project Timeline:
 - **2026-06-05**: Baccarat (Punto Banco) started.

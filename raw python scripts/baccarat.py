@@ -45,7 +45,7 @@ def interface(player_hand, bank_hand, money, bet, bet_type):
     print(f"======================================================================")
     print(f"BACCARACT - PUNTO BANCO | YOUR BALANCE: ${money}")
     print(f"----------------------------------------------------------------------")
-    print(f"YOUR BET: {bet_type} | BET: ${bet}")
+    print(f"YOUR BET: {bet_type.upper()} | BET: ${bet}")
     print(f"----------------------------------------------------------------------")
     print(f"PLAYER CARDS: ", end="", flush=True)
     if player_hand == []:
@@ -99,6 +99,8 @@ def hand_calc(hand):
 # Main logic
 
 def baccarat():
+    global money
+
     current_deck = deck.copy()
 
     player_hand = []
@@ -124,6 +126,7 @@ def baccarat():
     bet = 0
     bet_type = ""
 
+    interface([], [], money, "??", "??")
     print("What do you want to bet on? (Type 'exit' to quit)")
     bet_type = input("Choice: ")
     while bet_type.lower() not in ["player", "banker", "tie"]:
@@ -132,25 +135,31 @@ def baccarat():
             with open("money.txt", "w") as f:
                 f.write(str(money))
             sys.exit()
+        interface([], [], money, "??", "??")
         print("Please choose either 'player', 'banker', or 'tie'. What do you want to bet on? (Type 'exit' to quit)")
         bet_type = input("Choice: ")
     
+    interface([], [], money, "??", bet_type)
     print("How much do you want to bet on that?")
     bet = input("$")
     while not bet.isdigit() or int(bet) <= 0 or int(bet) > money:
         if not bet.isdigit():
+            interface([], [], money, "??", bet_type)
             print(f"Please input a positive integer. How much do you want to bet on that?")
             bet = input("$")
         elif int(bet) <= money:
+            interface([], [], money, "??", bet_type)
             print(f"Please input a positive integer. How much do you want to bet on that?")
             bet = input("$")
         else:
+            interface([], [], money, "??", bet_type)
             print(f"You do not have enough money. How much do you want to bet on that?")
             bet = input("$")
     bet = int(bet)
 
     # Checking who will draw another card
 
+    interface(player_hand, bank_hand, money, bet, bet_type)
     if player_value >= 8 or bank_value >= 8:
         print("Cards have been dealt. No one will draw cards.")
         input("Press Enter to continue...")
@@ -163,12 +172,14 @@ def baccarat():
         current_deck.pop(card)
         player_value = hand_calc(player_hand)
         if bank_third_card_choice[bank_value][val_calc(third_card)] == 'd':
+            interface(player_hand, bank_hand, money, bet, bet_type)
             print("The player has drawn their card. The banker will draw a card.")
             input("Press enter to continue...")
             card = random.randint(0, len(current_deck) - 1)
             bank_hand.append(current_deck[card])
             current_deck.pop(card)
             bank_value = hand_calc(bank_hand)
+            interface(player_hand, bank_hand, money, bet, bet_type)
             print("The banker has drawn their card.")
             input("Press enter to continue...")
         else:
@@ -176,13 +187,14 @@ def baccarat():
             input("Press enter to continue...")
     elif bank_value <= 5:
         print("Cards have been dealt. The banker will draw a card. ")
-        input("Press Enter to continue.")
+        input("Press Enter to continue...")
         card = random.randint(0, len(current_deck) - 1)
         bank_hand.append(current_deck[card])
         current_deck.pop(card)
         bank_value = hand_calc(bank_hand)
+        interface(player_hand, bank_hand, money, bet, bet_type)
         print("The banker has drawn their card.")
-        input("Press enter to continue.")
+        input("Press Enter to continue...")
     else:
         print("Cards have been dealt. No one will draw cards.")
         input("Press Enter to continue...")
@@ -195,24 +207,37 @@ def baccarat():
     else:
         winner = "tie"
     
+    interface(player_hand, bank_hand, money, bet, bet_type)
     if winner.lower() == bet_type.lower():
         if bet_type.lower() == "banker":
             print("You win! A commision (5%) will be taken from your banker bet.")
             money += (bet // 20) * 19
-            input("Press Enter to continue..")
+            input("Press Enter to continue...")
         elif bet_type.lower() == "player":
             print("You win!")
             money += bet
-            input("Press Enter to continue..")
+            input("Press Enter to continue...")
         else:
             print("You win!")
             money += bet * 7
-            input("Press Enter to continue..")
-    elif winner.lower():
+            input("Press Enter to continue...")
+    elif winner.lower() != "tie":
         print("It's a tie! Nothing happens.")
-        input("Press Enter to continue..")
+        input("Press Enter to continue...")
     else:
         print("You lose!")
         money -= bet
-        input("Press Enter to continue..")
-    
+        input("Press Enter to continue...")
+
+
+print("Hello! Welcome to Python Baccarat!")
+print("If you don't know how to play, please learn beforehand. This game uses 'punto banco' rules.")
+input("Press Enter to play...")
+
+while money > 0:
+    baccarat()
+
+with open("money.txt", "w") as f:
+    f.write(str(money))
+
+print("You ran out of money. Please go to 'money.txt' to reset.")

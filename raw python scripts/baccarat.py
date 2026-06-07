@@ -77,7 +77,11 @@ def val_calc(card):
 # Determine value of hand
 
 def hand_calc(hand):
-    pass
+    value = 0
+    for card in hand:
+        value += val_calc(card)
+    value = value % 10
+    return value
 
 # Main logic
 

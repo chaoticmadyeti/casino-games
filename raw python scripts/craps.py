@@ -71,6 +71,73 @@ def craps():
             bet = input("$")
     bet = int(bet)
 
+    num = random.randint(0, len(dice) - 1)
+    rolls.append(dice[num])
+    num = random.randint(0, len(dice) - 1)
+    rolls.append(dice[num])
+
+    sum = rolls[0] + rolls[1]
+
+    print("Rolling...")
+    input("Press Enter to continue...")
+
+    if sum == 7 or sum == 11:
+        if bet_type.lower() == "pass":
+            print("You win!")
+            money += bet
+            input("Press Enter to continue...")
+        else:
+            print("You lose!")
+            money -= bet
+            input("Press Enter to continue...")
+    elif sum == 2 or sum == 3 or sum == 12:
+        if bet_type.lower() == "pass":
+            print("You lose!")
+            money -= bet
+            input("Press Enter to continue...")
+        elif sum == 12:
+            print("It's a tie!")
+            input("Press Enter to continue...")
+        else:
+            print("You win!")
+            money += bet
+            input("Press Enter to continue...")
+    else:
+        print("The point has been established.")
+        input("Press Enter to continue...")
+        point = sum
+        sum = 0
+        while point != sum or point != 7:
+            num = random.randint(0, len(dice) - 1)
+            rolls.append(dice[num])
+            num = random.randint(0, len(dice) - 1)
+            rolls.append(dice[num])
+
+            sum = rolls[0] + rolls[1]
+
+            print("The dice has been rolled.")
+            input("Press Enter to continue...")
+        
+        if sum == 7:
+            if bet_type.lower() == "pass":
+                print("You lose!")
+                money -= bet
+                input("Press Enter to continue...")
+            else:
+                print("You win!")
+                money += bet
+                input("Press Enter to continue...")
+        else:
+            if bet_type.lower() == "pass":
+                print("You win!")
+                money += bet
+                input("Press Enter to continue...")
+            else:
+                print("You lose!")
+                money -= bet
+                input("Press Enter to continue...")
+
+
 print("Hello! Welcome to Python Craps!")
 print("If you don't know how to play, please learn beforehand. This game uses casino craps rules.")
 input("Press Enter to play...")

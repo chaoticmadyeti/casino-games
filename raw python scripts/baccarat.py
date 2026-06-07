@@ -54,7 +54,7 @@ def interface(player_hand, bank_hand, money, bet, bet_type):
         for i in range(len(player_hand) - 1):
             print(f"{player_hand[i]}, ", end="", flush=True)
         print(f"{player_hand[-1]} (VALUE: {hand_calc(player_hand)})") # forgot array[-1] existed too accustomed to c++ (reminder to use -1 index from now on)
-    print(f"BANK CARDS: ", end="", flush=True)
+    print(f"BANKER CARDS: ", end="", flush=True)
     if bank_hand == []:
         print("??, ?? (VALUE: ?)")
     else:
@@ -161,27 +161,58 @@ def baccarat():
         third_card = current_deck[card]
         player_hand.append(current_deck[card])
         current_deck.pop(card)
+        player_value = hand_calc(player_hand)
         if bank_third_card_choice[bank_value][val_calc(third_card)] == 'd':
-            print("The player has drawn their card. The bank will draw a card.")
+            print("The player has drawn their card. The banker will draw a card.")
             input("Press enter to continue...")
             card = random.randint(0, len(current_deck) - 1)
             bank_hand.append(current_deck[card])
             current_deck.pop(card)
-            print("The bank has drawn their card.")
+            bank_value = hand_calc(bank_hand)
+            print("The banker has drawn their card.")
             input("Press enter to continue...")
         else:
-            print("The player has drawn their card. The bank will not draw a card")
+            print("The player has drawn their card. The banker will not draw a card")
             input("Press enter to continue...")
     elif bank_value <= 5:
-        print("Cards have been dealt. The bank will draw a card. ")
+        print("Cards have been dealt. The banker will draw a card. ")
         input("Press Enter to continue.")
         card = random.randint(0, len(current_deck) - 1)
         bank_hand.append(current_deck[card])
         current_deck.pop(card)
-        print("The bank has drawn their card.")
+        bank_value = hand_calc(bank_hand)
+        print("The banker has drawn their card.")
         input("Press enter to continue.")
     else:
         print("Cards have been dealt. No one will draw cards.")
         input("Press Enter to continue...")
     
+    winner = ''
+    if player_value > bank_value:
+        winner = "player"
+    elif player_value < bank_value:
+        winner = "banker"
+    else:
+        winner = "tie"
+    
+    if winner.lower() == bet_type.lower():
+        if bet_type.lower() == "banker":
+            print("You win! A commision (5%) will be taken from your banker bet.")
+            money += (bet // 20) * 19
+            input("Press Enter to continue..")
+        elif bet_type.lower() == "player":
+            print("You win!")
+            money += bet
+            input("Press Enter to continue..")
+        else:
+            print("You win!")
+            money += bet * 7
+            input("Press Enter to continue..")
+    elif winner.lower():
+        print("It's a tie! Nothing happens.")
+        input("Press Enter to continue..")
+    else:
+        print("You lose!")
+        money -= bet
+        input("Press Enter to continue..")
     

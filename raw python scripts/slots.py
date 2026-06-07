@@ -21,6 +21,20 @@ else:
     print("Please put a positive integer in 'money.txt'")
     sys.exit()
 
+# Reels
+
+reel_1 = ["🍒", "🍒", "🍒", "🍒", "🍋", "🍋", "🍋", "🍊", "🍇", "🍫"]
+reel_2 = ["🍒", "🍒", "🍒", "🍒", "🍋", "🍋", "🍊", "🍊", "🍇", "🍫"]
+reel_3 = ["🍒", "🍒", "🍒", "🍋", "🍋", "🍋", "🍊", "🍊", "🍇", "🍫"]
+
+# Payouts (for future reference):
+# 2 Cherry - money back
+# 3 Cherry - 2x
+# 3 Lemon - 3x
+# 3 Orange - 5x
+# 3 Plum/Grape - 10x
+# 3 Bar - 20x
+
 # Interface for the machine
 
 def interface():

@@ -13,6 +13,19 @@ ranks = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
 suits = ['♠', '♥', '♦', '♣']
 deck = [f"{rank}{suit}" for suit in suits for rank in ranks]
 
+# Array of choices for bank's third card (d is draw, h is no draw)
+
+bank_third_card_choice = [
+    ['d', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd'] ,
+    ['d', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd'] ,
+    ['d', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'd'] ,
+    ['d', 'd', 'd', 'd', 'd', 'd', 'd', 'd', 'h', 'd'] ,
+    ['h', 'h', 'd', 'd', 'd', 'd', 'd', 'd', 'h', 'h'] ,
+    ['h', 'h', 'h', 'h', 'd', 'd', 'd', 'd', 'h', 'h'] ,
+    ['h', 'h', 'h', 'h', 'h', 'h', 'd', 'd', 'h', 'h'] ,
+    ['h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h', 'h'] ,
+]
+
 content = ''
 money = 0
 
@@ -105,6 +118,9 @@ def baccarat():
     bank_hand.append(current_deck[card])
     current_deck.pop(card)
 
+    player_value = hand_calc(player_hand)
+    bank_value = hand_calc(bank_hand)
+
     bet = 0
     bet_type = ""
 
@@ -132,3 +148,40 @@ def baccarat():
             print(f"You do not have enough money. How much do you want to bet on that?")
             bet = input("$")
     bet = int(bet)
+
+    # Checking who will draw another card
+
+    if player_value >= 8 or bank_value >= 8:
+        print("Cards have been dealt. No one will draw cards.")
+        input("Press Enter to continue...")
+    elif player_value <= 5:
+        print("Cards have been dealt. The player will draw a card.")
+        input("Press Enter to continue...")
+        card = random.randint(0, len(current_deck) - 1)
+        third_card = current_deck[card]
+        player_hand.append(current_deck[card])
+        current_deck.pop(card)
+        if bank_third_card_choice[bank_value][val_calc(third_card)] == 'd':
+            print("The player has drawn their card. The bank will draw a card.")
+            input("Press enter to continue...")
+            card = random.randint(0, len(current_deck) - 1)
+            bank_hand.append(current_deck[card])
+            current_deck.pop(card)
+            print("The bank has drawn their card.")
+            input("Press enter to continue...")
+        else:
+            print("The player has drawn their card. The bank will not draw a card")
+            input("Press enter to continue...")
+    elif bank_value <= 5:
+        print("Cards have been dealt. The bank will draw a card. ")
+        input("Press Enter to continue.")
+        card = random.randint(0, len(current_deck) - 1)
+        bank_hand.append(current_deck[card])
+        current_deck.pop(card)
+        print("The bank has drawn their card.")
+        input("Press enter to continue.")
+    else:
+        print("Cards have been dealt. No one will draw cards.")
+        input("Press Enter to continue...")
+    
+    

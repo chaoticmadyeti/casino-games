@@ -25,8 +25,17 @@ else:
 
 # Interface for the table
 
-def interface():
-    pass
+def interface(money, bet, bet_amount, rolls):
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print(f"======================================================================")
+    print(f"CRAPS | YOUR BALANCE: ${money}")
+    print(f"----------------------------------------------------------------------")
+    print(f"YOUR BET: {bet} | BET AMOUNT: ${bet_amount}")
+    if rolls == []:
+        print(f"ROLLS: ??, ?? (TOTAL: ??)")
+    else:
+        print(f"ROLLS: {rolls[0]}, {rolls[1]} (TOTAL: {rolls[0] + rolls[1]})")
+    print(f"----------------------------------------------------------------------")
 
 # Main logic
 

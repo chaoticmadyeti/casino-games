@@ -53,7 +53,26 @@ def interface(player_hand, bank_hand, money, bet, bet_type):
 # Determine value of a card
 
 def val_calc(card):
-    pass
+    if card[0] == 'A':
+        return 1
+    elif card[0] == '2':
+        return 2
+    elif card[0] == '3':
+        return 3
+    elif card[0] == '4':
+        return 4
+    elif card[0] == '5':
+        return 5
+    elif card[0] == '6':
+        return 6
+    elif card[0] == '7':
+        return 7
+    elif card[0] == '8':
+        return 8
+    elif card[0] == '9':
+        return 9
+    else:
+        return 0
 
 # Determine value of hand
 

@@ -10,6 +10,7 @@ else:
 os.chdir(exe_dir)
 
 dice = [1, 2, 3, 4, 5, 6]
+bets = ["pass", "don't pass", "dont pass"]
 
 content = ''
 money = 0
@@ -40,7 +41,35 @@ def interface(money, bet, bet_amount, rolls):
 # Main logic
 
 def craps():
-    pass
+    rolls = []
+
+    print("What would you like to bet on? (Type 'exit' to quit)")
+    print("Currently, this code has: Pass, Don't Pass")
+    bet_type = input("Choice: ")
+    while bet_type.lower() not in bets:
+        if bet_type.lower() == 'exit':
+            print("Exiting...")
+            with open("money.txt", "w") as f:
+                f.write(str(money))
+            sys.exit()
+        print("Please choose a valid option. What would you like to bet on? (Type 'exit' to quit)")
+        print("Currently, this code has: Pass, Don't Pass")
+        bet_type = input("Choice: ")
+    
+    print("How much do you want to bet on that?")
+    bet = input("$")
+
+    while not bet.isdigit() or int(bet) <= 0 or int(bet) > money:
+        if not bet.isdigit():
+            print(f"Please input a positive integer. How much do you want to bet?")
+            bet = input("$")
+        elif int(bet) <= money:
+            print(f"Please input a positive integer. How much do you want to bet?")
+            bet = input("$")
+        else:
+            print(f"You do not have enough money. How much do you want to bet?")
+            bet = input("$")
+    bet = int(bet)
 
 print("Hello! Welcome to Python Craps!")
 print("If you don't know how to play, please learn beforehand. This game uses casino craps rules.")

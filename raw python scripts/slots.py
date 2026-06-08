@@ -23,17 +23,19 @@ else:
 
 # Reels
 
-reel_1 = ["🍒", "🍒", "🍒", "🍒", "🍋", "🍋", "🍋", "🍊", "🍇", "🍫"]
-reel_2 = ["🍒", "🍒", "🍒", "🍒", "🍋", "🍋", "🍊", "🍊", "🍇", "🍫"]
-reel_3 = ["🍒", "🍒", "🍒", "🍋", "🍋", "🍋", "🍊", "🍊", "🍇", "🍫"]
+reel_1 = ["🍒", "🍒", "🍒", "🍋", "🍋", "🍊", "🍊", "🍇", "🍫", "7️⃣"]
+reel_2 = ["🍒", "🍒", "🍋", "🍋", "🍋", "🍊", "🍊", "🍇", "🍫", "7️⃣"]
+reel_3 = ["🍒", "🍒", "🍋", "🍋", "🍊", "🍊", "🍊", "🍇", "🍫", "7️⃣"]
 
 # Payouts (for future reference):
-# 2 Cherry - money back
-# 3 Cherry - 2x
-# 3 Lemon - 3x
-# 3 Orange - 5x
-# 3 Plum/Grape - 10x
-# 3 Bar - 20x
+# 1 Cherry - money back
+# 2 Cherry - 2x
+# 3 Cherry - 5x
+# 3 Lemon - 10x
+# 3 Orange - 15x
+# 3 Grape - 20x
+# 3 Bar - 50x
+# 3 7 - 100x
 
 # Interface for the machine
 

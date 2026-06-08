@@ -37,10 +37,19 @@ reel_3 = ["🍒", "🍒", "🍋", "🍋", "🍊", "🍊", "🍊", "🍇", "🍫"
 # 3 Bar - 50x
 # 3 7 - 100x
 
+# Scrolling machine
+
+def machine_spin():
+    pass
+
 # Interface for the machine
 
-def interface():
-    pass
+def interface(money, bet):
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print(f"======================================================================")
+    print(f"SLOTS | BALANCE: {money} | BET: {bet}")
+    print(f"----------------------------------------------------------------------")
+    # Betting, as well as the machine spin
 
 # Main slots logic
 

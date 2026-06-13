@@ -22,11 +22,13 @@ else:
     print("Please put a positive integer in 'money.txt'")
     sys.exit()
 
+os.system('cls' if os.name == 'nt' else 'clear')
+
 # Reels
 
-reel_1 = ["🍒", "--", "🍒", "--", "🍒", "--", "🍋", "--", "🍋", "--", "🍊", "--", "🍊", "--", "🍇", "--", "🍫", "--", "🍀", "--"]
-reel_2 = ["🍒", "--", "🍒", "--", "🍋", "--", "🍋", "--", "🍋", "--", "🍊", "--", "🍊", "--", "🍇", "--", "🍫", "--", "🍀", "--"]
-reel_3 = ["🍒", "--", "🍒", "--", "🍋", "--", "🍋", "--", "🍊", "--", "🍊", "--", "🍊", "--", "🍇", "--", "🍫", "--", "🍀", "--"]
+reel_1 = ["🍒", "--", "🍋", "--", "🍒", "--", "🍋", "--", "🍫", "--", "🍀", "--", "🍊", "--", "🍇", "--", "🍒", "--", "🍊", "--"]
+reel_2 = ["🍇", "--", "🍒", "--", "🍋", "--", "🍀", "--", "🍋", "--", "🍒", "--", "🍊", "--", "🍊", "--", "🍫", "--", "🍋", "--"]
+reel_3 = ["🍊", "--", "🍫", "--", "🍇", "--", "🍋", "--", "🍊", "--", "🍋", "--", "🍀", "--", "🍒", "--", "🍒", "--", "🍊", "--"]
 
 # Payouts (for future reference):
 # 1 Cherry - money back
@@ -37,6 +39,7 @@ reel_3 = ["🍒", "--", "🍒", "--", "🍋", "--", "🍋", "--", "🍊", "--", 
 # 3 Grape - 20x
 # 3 Bar - 50x
 # 3 7 - 100x
+# 🍒 🍋 🍊 🍇 🍫 🍀
 
 # Scrolling machine
 
@@ -53,7 +56,8 @@ def machine_spin():
 
     while cnt < reel_3_amount:
 
-        os.system('cls' if os.name == 'nt' else 'clear')
+        sys.stdout.write('\x1b[5A\x1b[J')
+        sys.stdout.flush()
         cnt += 1
 
         if cnt < reel_1_amount:
@@ -71,7 +75,7 @@ def machine_spin():
         else:
             print(f"{reel_3[(reel_3_idx + reel_3_amount - 2) % 20]}", end="", flush=True)
         
-        print("\n")
+        print("")
 
         if cnt < reel_1_amount:
             print(f"{reel_1[(reel_1_idx + cnt - 1) % 20]}", end="", flush=True)
@@ -88,7 +92,7 @@ def machine_spin():
         else:
             print(f"{reel_3[(reel_3_idx + reel_3_amount - 1) % 20]}", end="", flush=True)
         
-        print("\n")
+        print("")
 
         if cnt < reel_1_amount:
             print(f"{reel_1[(reel_1_idx + cnt) % 20]}", end="", flush=True)
@@ -105,7 +109,7 @@ def machine_spin():
         else:
             print(f"{reel_3[(reel_3_idx + reel_3_amount) % 20]}", end="", flush=True)
         
-        print("\n")
+        print("")
 
         if cnt < reel_1_amount:
             print(f"{reel_1[(reel_1_idx + cnt + 1) % 20]}", end="", flush=True)
@@ -122,7 +126,7 @@ def machine_spin():
         else:
             print(f"{reel_3[(reel_3_idx + reel_3_amount + 1) % 20]}", end="", flush=True)
         
-        print("\n")
+        print("")
 
         if cnt < reel_1_amount:
             print(f"{reel_1[(reel_1_idx + cnt + 2) % 20]}", end="", flush=True)
@@ -139,11 +143,9 @@ def machine_spin():
         else:
             print(f"{reel_3[(reel_3_idx + reel_3_amount + 2) % 20]}", end="", flush=True)
         
-        print("\n")
+        print("")
 
-        time.sleep(0.07)
-        # sys.stdout.write('\x1b[5A\x1b[J')
-        # sys.stdout.flush()
+        time.sleep(0.05)
 
 # Interface for the machine
 

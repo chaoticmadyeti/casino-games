@@ -30,6 +30,10 @@ reel_1 = ["🍒", "--", "🍋", "--", "🍒", "--", "🍋", "--", "🍫", "--", 
 reel_2 = ["🍇", "--", "🍒", "--", "🍋", "--", "🍀", "--", "🍋", "--", "🍒", "--", "🍊", "--", "🍊", "--", "🍫", "--", "🍋", "--"]
 reel_3 = ["🍊", "--", "🍫", "--", "🍇", "--", "🍋", "--", "🍊", "--", "🍋", "--", "🍀", "--", "🍒", "--", "🍒", "--", "🍊", "--"]
 
+# Reel 1: 3 Cherry, 2 Lemon, 2 Orange, 1 Grape, 1 Bar, 1 Clover
+# Reel 2: 2 Cherry, 3 Lemon, 2 Orange, 1 Grape, 1 Bar, 1 Clover
+# Reel 3: 2 Cherry, 2 Lemon, 3 Orange, 1 Grape, 1 Bar, 1 Clover
+
 # Payouts (for future reference):
 # 1 Cherry - money back
 # 2 Cherry - 2x
@@ -38,8 +42,34 @@ reel_3 = ["🍊", "--", "🍫", "--", "🍇", "--", "🍋", "--", "🍊", "--", 
 # 3 Orange - 15x
 # 3 Grape - 20x
 # 3 Bar - 50x
-# 3 7 - 100x
+# 3 Clover - 100x
 # 🍒 🍋 🍊 🍇 🍫 🍀
+
+# Calculate how much you win
+
+def winnings(final_middle):
+    cnt = 0
+    for i in final_middle:
+        if i == "🍒":
+            cnt += 1
+    if cnt == 1:
+        return 1
+    elif cnt == 2:
+        return 2
+    elif cnt == 3:
+        return 5
+    elif final_middle == ["🍋", "🍋", "🍋"]:
+        return 10
+    elif final_middle == ["🍊", "🍊", "🍊"]:
+        return 15
+    elif final_middle == ["🍇", "🍇", "🍇"]:
+        return 20
+    elif final_middle == ["🍫", "🍫", "🍫"]:
+        return 50
+    elif final_middle == ["🍀", "🍀", "🍀"]:
+        return 100
+    else:
+        return -1
 
 # Scrolling machine
 
@@ -48,9 +78,18 @@ def machine_spin():
     reel_2_idx = random.randint(0, 19)
     reel_3_idx = random.randint(0, 19)
 
+    if reel_1[reel_1_idx] == "--":
+        reel_1_idx -= 1
+    
+    if reel_2[reel_2_idx] == "--":
+        reel_2_idx -= 1
+    
+    if reel_3[reel_3_idx] == "--":
+        reel_3_idx -= 1
+
     reel_1_amount = random.randint(50, 70)
-    reel_2_amount = reel_1_amount + 5
-    reel_3_amount = reel_2_amount + 5
+    reel_2_amount = reel_1_amount + random.randint(4, 5)
+    reel_3_amount = reel_2_amount + random.randint(4, 5)
 
     cnt = 0
 
@@ -145,7 +184,9 @@ def machine_spin():
         
         print("")
 
-        time.sleep(0.05)
+        time.sleep(0.07)
+    
+    return winnings([reel_1[(reel_1_idx + reel_1_amount) % 20], reel_2[(reel_2_idx + reel_2_amount - 1) % 20], reel_3[(reel_3_idx + reel_3_amount) % 20]])
 
 # Interface for the machine
 

@@ -22,8 +22,6 @@ else:
     print("Please put a positive integer in 'money.txt'")
     sys.exit()
 
-os.system('cls' if os.name == 'nt' else 'clear')
-
 # Reels
 
 reel_1 = ["🍒", "--", "🍋", "--", "🍒", "--", "🍋", "--", "🍫", "--", "🍀", "--", "🍊", "--", "🍇", "--", "🍒", "--", "🍊", "--"]
@@ -88,16 +86,18 @@ def machine_spin():
     if reel_3[reel_3_idx] == "--":
         reel_3_idx -= 1
 
-    reel_1_amount = random.randint(50, 70)
-    reel_2_amount = reel_1_amount + random.randint(4, 5)
-    reel_3_amount = reel_2_amount + random.randint(4, 5)
+    reel_1_amount = random.randint(30, 50)
+    if (reel_1[(reel_1_idx + reel_1_amount) % 20] == "--"):
+        reel_1_amount -= 1
+    reel_2_amount = reel_1_amount + 4
+    reel_3_amount = reel_2_amount + 4
 
     cnt = 0
 
     while cnt < reel_3_amount:
-
-        sys.stdout.write('\x1b[5A\x1b[J')
-        sys.stdout.flush()
+        if cnt >= 1:
+            sys.stdout.write('\x1b[5A\x1b[J')
+            sys.stdout.flush()
         cnt += 1
 
         if cnt < reel_1_amount:
@@ -194,13 +194,18 @@ def machine_spin():
 def interface(money, bet):
     os.system('cls' if os.name == 'nt' else 'clear')
     print(f"======================================================================")
-    print(f"SLOTS | BALANCE: {money} | BET: {bet}")
-    print(f"----------------------------------------------------------------------")
+    print(f"SLOTS | BALANCE: ${money} | BET: ${bet}")
     # Betting, as well as the machine spin
 
 # Main slots logic
 
 def slots():
+    global money
+
+    bet = '??'
+
+    interface(money, "??")
+    print(f"----------------------------------------------------------------------")
     print(f"How much do you want to bet? (Type 'exit' to quit)")
     bet = input("$")
     
@@ -211,51 +216,58 @@ def slots():
                 f.write(str(money))
             sys.exit()
         if not bet.isdigit():
-            interface("??", [], [], money, "bet")
+            interface(money, "??")
+            print(f"----------------------------------------------------------------------")
             print(f"Please input a positive integer. How much do you want to bet? (Type 'exit' to quit)")
             bet = input("$")
         elif int(bet) <= money:
-            interface("??", [], [], money, "bet")
+            interface(money, "??")
+            print(f"----------------------------------------------------------------------")
             print(f"Please input a positive integer. How much do you want to bet? (Type 'exit' to quit)")
             bet = input("$")
         else:
-            interface("??", [], [], money, "bet")
+            interface(money, "??")
+            print(f"----------------------------------------------------------------------")
             print(f"You do not have enough money. How much do you want to bet? (Type 'exit' to quit)")
             bet = input("$")
     bet = int(bet)
 
-    print(f"------------------------------SPINNING------------------------------")
+    interface(money, bet)
+    print(f"-------------------------------SPINNING-------------------------------")
 
     multi = machine_spin()
-    money += bet * multi
+    money += bet * (multi - 1)
 
     if multi == -1:
         print("You lost!")
         print(f"You lost {bet}.")
+        input("Press Enter to continue...")
     elif multi == 1:
         print("Money back!")
+        input("Press Enter to continue...")
     elif multi <= 5:
         print("Nice win!")
-        print(f"You won {bet * multi}.")
+        print(f"You won {bet * (multi - 1)}.")
+        input("Press Enter to continue...")
     elif multi <= 50:
         print("Big win!")
-        print(f"You won {bet * multi}.")
+        print(f"You won {bet * (multi - 1)}.")
+        input("Press Enter to continue...")
     elif multi == 100:
         print("JACKPOT!!!!")
-        print(f"You won {bet * multi}.")
+        print(f"You won {bet * (multi - 1)}.")
+        input("Press Enter to continue...")
     
-    
 
-# print("Hello! Welcome to Python Slots!")
-# print("If you don't know how to play, please learn beforehand. This game uses custom made reels.")
-# input("Press Enter to play...")
 
-# while money > 0:
-    # slots()
+print("Hello! Welcome to Python Slots!")
+print("If you don't know how to play, please learn beforehand. This game uses custom made reels.")
+input("Press Enter to play...")
 
-# with open("money.txt", "w") as f:
-    # f.write(str(money))
+while money > 0:
+    slots()
 
-# print("You ran out of money. Please go to 'money.txt' to reset.")
+with open("money.txt", "w") as f:
+    f.write(str(money))
 
-machine_spin()
+print("You ran out of money. Please go to 'money.txt' to reset.")

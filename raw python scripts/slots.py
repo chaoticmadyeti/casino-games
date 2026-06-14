@@ -67,7 +67,7 @@ def winnings(final_middle):
     elif final_middle == ["🍀", "🍀", "🍀"]:
         return 100
     else:
-        return -1
+        return 0
 
 # Scrolling machine
 

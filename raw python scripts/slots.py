@@ -74,6 +74,7 @@ def winnings(final_middle):
 # Scrolling machine
 
 def machine_spin():
+
     reel_1_idx = random.randint(0, 19)
     reel_2_idx = random.randint(0, 19)
     reel_3_idx = random.randint(0, 19)
@@ -200,7 +201,50 @@ def interface(money, bet):
 # Main slots logic
 
 def slots():
-    pass
+    print(f"How much do you want to bet? (Type 'exit' to quit)")
+    bet = input("$")
+    
+    while not bet.isdigit() or int(bet) <= 0 or int(bet) > money:
+        if bet.lower() == "exit":
+            print("Exiting...")
+            with open("money.txt", "w") as f:
+                f.write(str(money))
+            sys.exit()
+        if not bet.isdigit():
+            interface("??", [], [], money, "bet")
+            print(f"Please input a positive integer. How much do you want to bet? (Type 'exit' to quit)")
+            bet = input("$")
+        elif int(bet) <= money:
+            interface("??", [], [], money, "bet")
+            print(f"Please input a positive integer. How much do you want to bet? (Type 'exit' to quit)")
+            bet = input("$")
+        else:
+            interface("??", [], [], money, "bet")
+            print(f"You do not have enough money. How much do you want to bet? (Type 'exit' to quit)")
+            bet = input("$")
+    bet = int(bet)
+
+    print(f"------------------------------SPINNING------------------------------")
+
+    multi = machine_spin()
+    money += bet * multi
+
+    if multi == -1:
+        print("You lost!")
+        print(f"You lost {bet}.")
+    elif multi == 1:
+        print("Money back!")
+    elif multi <= 5:
+        print("Nice win!")
+        print(f"You won {bet * multi}.")
+    elif multi <= 50:
+        print("Big win!")
+        print(f"You won {bet * multi}.")
+    elif multi == 100:
+        print("JACKPOT!!!!")
+        print(f"You won {bet * multi}.")
+    
+    
 
 # print("Hello! Welcome to Python Slots!")
 # print("If you don't know how to play, please learn beforehand. This game uses custom made reels.")

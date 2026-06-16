@@ -16,7 +16,8 @@ Some common numbers to call if you are dealing with a gambling addiction include
 - 1800 858 858 (Australia)
 
 ## Project Timeline:
-- **2026-06-07**: Craps game started.
+- **2026-06-16**: Bingo game started.
+- **2026-06-07**: Craps, Slots game started.
 - **2026-06-05**: Baccarat (Punto Banco) started.
 - **2026-05-26**: Texas Hold 'Em game started.
 - **2026-05-16**: Added money that carries over games.

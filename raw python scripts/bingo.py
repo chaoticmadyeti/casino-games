@@ -29,11 +29,22 @@ numbers_n = list(range(31, 46))
 numbers_g = list(range(46, 61))
 numbers_o = list(range(61, 76))
 
+# All 99 bots playing
+
+bot_id = list(range(0, 99))
+bots = [f"Bot {id + 1}" for id in bot_id]
+bot_cards = [None] * 99
+bot_tokens = [None] * 99
+
+# Mark a number if it is called
+
 def mark_token(card_tokens, number_called, card):
     if number_called in card:
         grid_index = card.index(number_called)
         card_tokens.append(grid_index)
     return card_tokens
+
+# Create the cards
 
 def create_cards():
     card = []
@@ -72,6 +83,8 @@ def create_cards():
 
     return card
 
+# Check for a bingo
+
 winning_lines = [
         {0, 1, 2, 3, 4}, 
         {5, 6, 7, 8, 9},
@@ -96,23 +109,41 @@ def check_bingo(card_tokens): # card_tokens is an array of all numbers gotten
     
     return False
 
+# Main bingo logic
+
 def bingo():
     player_card = create_cards()
     card_tokens = [12]
 
+    for i in bot_id:
+        bot_cards[i] = create_cards()
+        bot_tokens[i] = [12]
+
     current_numbers = all_numbers.copy()
 
-    print(f"{player_card[0]} {player_card[1]} {player_card[2]} {player_card[3]} {player_card[4]}")
-    print(f"{player_card[5]} {player_card[6]} {player_card[7]} {player_card[8]} {player_card[9]}")
-    print(f"{player_card[10]} {player_card[11]} {player_card[12]} {player_card[13]} {player_card[14]}")
-    print(f"{player_card[15]} {player_card[16]} {player_card[17]} {player_card[18]} {player_card[19]}")
-    print(f"{player_card[20]} {player_card[21]} {player_card[22]} {player_card[23]} {player_card[24]}")
+    winner = False
+
+    # Core number pulling logic
 
     while not check_bingo(card_tokens):
+        for i in bot_id:
+            if check_bingo(bot_tokens[i]):
+                print(f"Bot {i + 1} won!")
+                winner = True
+        
+        if winner:
+            break
+
         current_number = random.randint(0, len(current_numbers) - 1)
-        mark_token(card_tokens, current_numbers[current_number], player_card)
+        card_tokens = mark_token(card_tokens, current_numbers[current_number], player_card)
         print(current_numbers[current_number])
+        for i in bot_id:
+            bot_tokens[i] = mark_token(bot_tokens[i], current_numbers[current_number], bot_cards[i])
         current_numbers.pop(current_number)
+
+        if check_bingo(card_tokens):
+            print("You won!")
+            break
 
 
 bingo()

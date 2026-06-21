@@ -31,10 +31,12 @@ numbers_o = list(range(61, 76))
 
 # All 99 bots playing
 
-bot_id = list(range(0, 99))
+total_bot_num = 9
+
+bot_id = list(range(0, total_bot_num))
 bots = [f"Bot {id + 1}" for id in bot_id]
-bot_cards = [None] * 99
-bot_tokens = [None] * 99
+bot_cards = [None] * total_bot_num
+bot_tokens = [None] * total_bot_num
 
 # Mark a number if it is called
 

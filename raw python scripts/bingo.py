@@ -213,6 +213,7 @@ def bingo():
 
         if check_bingo(card_tokens):
             print("You won!")
+            input("Press Enter to continue...")
             break
 
         for i in bot_id:

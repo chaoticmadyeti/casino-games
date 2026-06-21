@@ -46,8 +46,6 @@ multi = 1
 
 # Interface for the table
 
-# (Payout: {all_bets[bet][2]} : 1)
-
 def interface(money, all_bets, total_bet_amount):
     os.system('cls' if os.name == 'nt' else 'clear')
     print(f"======================================================================")
@@ -65,7 +63,6 @@ def interface(money, all_bets, total_bet_amount):
             print(f"{all_bets[len(all_bets) - 1][0][number]}, ", end="", flush=True)
         print(f"{all_bets[len(all_bets) - 1][0][len(all_bets[len(all_bets) - 1][0]) - 1]} (Payout: {all_bets[len(all_bets) - 1][2]} : 1)")
     print(f"----------------------------------------------------------------------")
-    # Betting choices and wheel spinning
 
 # Colourise numbers
 
@@ -417,9 +414,9 @@ def roulette():
                 earnings -= bets[1]
         
         if earnings > 0:
-            print(f"You earnt {earnings}.")
+            print(f"You earnt ${earnings}.")
         elif earnings < 0:
-            print(f"You lost {-1 * earnings}.")
+            print(f"You lost ${-1 * earnings}.")
         else:
             print(f"You broke even.")
         money += earnings

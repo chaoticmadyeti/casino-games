@@ -11,11 +11,11 @@ Please note that this is a only a fun project made for entertainment purposes on
 
 ## How to Play
 
-To play, simply double click the executable you want to play, all of which are stored in the "mac executables" folder. This should prompt the terminal to open, where the game will run. Please note that money in these games are stored across a central file called "money.txt", so place that file in the same folder as the game you want to play, so the code can access it. These executables are compiled for universal Mac usage, however it has only been tested on a Mac Silicon, so Intel users may or may not encounter errors.
+To play, simply double click the executable you want to play, all of which are stored in the "mac executables" folder. This should prompt the terminal to open, where the game will run. Please note that money in these games are stored across a central file called "money.txt", so place that file in the same folder as the game you want to play, so the code can access it. These executables are compiled for universal Mac usage, however the code has only been tested on a Mac Silicon.
 
 If you encounter the error of "developer unable to be verified" (or similar), simply right-click the .app file, click "Open", and press "Open" again once the warning message appears. You only have to do this once, after you have opened it for the first time, you can simply double-click and it will open without a problem.
 
-All the rules to the games are listed below. These rules may vary from real casinos. All decimals are rounded down, and thus there are no cents in these games.
+All the rules to the games are listed below. These rules may vary from the corresponding game real casinos. All decimals are rounded down, and thus there are no cents in these games.
 
 ### Blackjack
 

@@ -32,19 +32,12 @@ numbers_o = list(range(61, 76))
 # Interface
 
 def interface(bet, jackpot):
+    global money
+
     os.system('cls' if os.name == 'nt' else 'clear')
     print(f"======================================================================")
-    print(f"BINGO | BET: ${bet} | JACKPOT: ${jackpot}")
+    print(f"BINGO | BET: ${bet} | JACKPOT: ${jackpot} | BALANCE: ${money}")
     print(f"----------------------------------------------------------------------")
-
-# All 99 bots playing
-
-total_bot_num = 9
-
-bot_id = list(range(0, total_bot_num))
-bots = [f"Bot {id + 1}" for id in bot_id]
-bot_cards = [None] * total_bot_num
-bot_tokens = [None] * total_bot_num
 
 # Mark a number if it is called
 
@@ -133,8 +126,63 @@ def display_card(card, card_tokens):
 # Main bingo logic
 
 def bingo():
+    global money
+
     bet = 0
     jackpot = 0
+
+    interface(bet, jackpot)
+    print(f"How much do you want to bet? (Type 'exit' to quit)")
+    bet = input("$")
+    
+    while not bet.isdigit() or int(bet) <= 0 or int(bet) > money:
+        if bet.lower() == "exit":
+            print("Exiting...")
+            with open("money.txt", "w") as f:
+                f.write(str(money))
+            sys.exit()
+        if not bet.isdigit():
+            interface(bet, jackpot)
+            print(f"Please input a positive integer. How much do you want to bet? (Type 'exit' to quit)")
+            bet = input("$")
+        elif int(bet) <= money:
+            interface(bet, jackpot)
+            print(f"Please input a positive integer. How much do you want to bet? (Type 'exit' to quit)")
+            bet = input("$")
+        else:
+            interface(bet, jackpot)
+            print(f"You do not have enough money. How much do you want to bet? (Type 'exit' to quit)")
+            bet = input("$")
+    bet = int(bet)
+
+    money = money - bet
+
+    interface(bet, jackpot)
+    total_bot_num = 0
+    print(f"How many bots do you want to play against? (This, and your bet, will determine the jackpot)")
+    total_bot_num = input("Number of bots: ")
+
+    while not total_bot_num.isdigit() or int(total_bot_num) <= 0 or int(total_bot_num) > 999:
+        if not total_bot_num.isdigit():
+            interface(bet, jackpot)
+            print(f"Please input a positive integer. How many bots do you want to play against?")
+            total_bot_num = input("Number of bots: ")
+        elif int(total_bot_num) <= 0:
+            interface(bet, jackpot)
+            print(f"Please input a positive integer. How many bots do you want to play against?")
+            total_bot_num = input("Number of bots: ")
+        else:
+            interface(bet, jackpot)
+            print(f"The maximum amount of bots is 999. How many bots do you want to play against?")
+            total_bot_num = input("Number of bots: ")
+
+    total_bot_num = int(total_bot_num)
+
+    jackpot = bet * (total_bot_num + 1)
+
+    bot_id = list(range(0, total_bot_num))
+    bot_cards = [None] * total_bot_num
+    bot_tokens = [None] * total_bot_num 
 
     player_card = create_cards()
     card_tokens = [12]
@@ -145,20 +193,12 @@ def bingo():
 
     current_numbers = all_numbers.copy()
 
-    winner = False
+    bot_winner = False
 
     # Core number pulling logic
 
     while not check_bingo(card_tokens):
-        interface(0, 0)
-        for i in bot_id:
-            if check_bingo(bot_tokens[i]):
-                print(f"Bot {i + 1} won! Bot {i + 1}'s card:")
-                display_card(bot_cards[i], bot_tokens[i])
-                winner = True
-        
-        if winner:
-            break
+        interface(bet, jackpot)
 
         current_number = random.randint(0, len(current_numbers) - 1)
         card_tokens = mark_token(card_tokens, current_numbers[current_number], player_card)
@@ -175,5 +215,34 @@ def bingo():
             print("You won!")
             break
 
+        for i in bot_id:
+            if check_bingo(bot_tokens[i]):
+                interface(bet, jackpot)
+                print(f"Bot {i + 1} won! Bot {i + 1}'s card:")
+                display_card(bot_cards[i], bot_tokens[i])
+                input("Press Enter to continue...")
+                bot_winner = True
+        
+        if bot_winner:
+            break
+    
+    interface(bet, jackpot)
+    if bot_winner:
+        print("You lose!")
+    else:
+        print(f"You won! You won the jackpot of ${jackpot}!")
+        money = money + jackpot
+    input("Press Enter to continue...")
 
-bingo()
+
+print("Hello! Welcome to Python Bingo!")
+print("Rules for this game are in README.md. Please learn the rules beforehand.")
+input("Press Enter to play...")
+
+while money > 0:
+    bingo()
+
+with open("money.txt", "w") as f:
+    f.write(str(money))
+
+print("You ran out of money. Please go to 'money.txt' to reset.")

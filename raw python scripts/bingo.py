@@ -29,6 +29,14 @@ numbers_n = list(range(31, 46))
 numbers_g = list(range(46, 61))
 numbers_o = list(range(61, 76))
 
+# Interface
+
+def interface(bet, jackpot):
+    os.system('cls' if os.name == 'nt' else 'clear')
+    print(f"======================================================================")
+    print(f"BINGO | BET: ${bet} | JACKPOT: ${jackpot}")
+    print(f"----------------------------------------------------------------------")
+
 # All 99 bots playing
 
 total_bot_num = 9
@@ -125,6 +133,9 @@ def display_card(card, card_tokens):
 # Main bingo logic
 
 def bingo():
+    bet = 0
+    jackpot = 0
+
     player_card = create_cards()
     card_tokens = [12]
 
@@ -139,9 +150,10 @@ def bingo():
     # Core number pulling logic
 
     while not check_bingo(card_tokens):
+        interface(0, 0)
         for i in bot_id:
             if check_bingo(bot_tokens[i]):
-                print(f"Bot {i + 1} won!")
+                print(f"Bot {i + 1} won! Bot {i + 1}'s card:")
                 display_card(bot_cards[i], bot_tokens[i])
                 winner = True
         
@@ -150,14 +162,14 @@ def bingo():
 
         current_number = random.randint(0, len(current_numbers) - 1)
         card_tokens = mark_token(card_tokens, current_numbers[current_number], player_card)
-        print(current_numbers[current_number])
+        print(f"The caller calls {current_numbers[current_number]}! Your card now:")
         for i in bot_id:
             bot_tokens[i] = mark_token(bot_tokens[i], current_numbers[current_number], bot_cards[i])
         current_numbers.pop(current_number)
 
         display_card(player_card, card_tokens)
 
-        input("")
+        input("Press Enter to continue...")
 
         if check_bingo(card_tokens):
             print("You won!")

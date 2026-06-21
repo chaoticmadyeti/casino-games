@@ -15,7 +15,7 @@ To play, simply double click the executable you want to play, all of which are s
 
 All the rules to the games are listed below. These rules may vary from real casinos.
 
-### test idk
+
 
 ## Project Timeline:
 - **2026-06-16**: Bingo game started.

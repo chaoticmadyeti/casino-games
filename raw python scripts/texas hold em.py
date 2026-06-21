@@ -231,11 +231,11 @@ def find_winner(community_cards, players):
     return sorted_players
 
 
-# Core betting logic
+# Core logic
 
 def texas_hold_em(player_list):
 
-    # Print statements added to make sure the code is working, delete it later
+    print("Community Cards: ")
 
     current_deck = deck.copy()
     community_cards = []
@@ -243,7 +243,7 @@ def texas_hold_em(player_list):
         card = random.randint(0, len(current_deck) - 1)
         community_cards.append(current_deck[card])
         current_deck.pop(card)
-        print(f"{community_cards[i].rank}{community_cards[i].suit}")
+        print(f"{ranks[community_cards[i].rank]}{community_cards[i].suit}")
     for player in player_list:
         card = random.randint(0, len(current_deck) - 1)
         player.hole_cards.append(current_deck[card])
@@ -251,11 +251,17 @@ def texas_hold_em(player_list):
         card = random.randint(0, len(current_deck) - 1)
         player.hole_cards.append(current_deck[card])
         current_deck.pop(card)
-        print(f"{player.hole_cards[0].rank}{player.hole_cards[0].suit}, {player.hole_cards[1].rank}{player.hole_cards[1].suit}")
+        print(f"Player {player.id} Hand: {ranks[player.hole_cards[0].rank]}{player.hole_cards[0].suit}, {ranks[player.hole_cards[1].rank]}{player.hole_cards[1].suit}")
     
     player_ranking = find_winner(community_cards, player_list)
 
     for player in player_ranking:
-        print(f"{player.id} - {player.score}")
+        print(f"Player {player.id} Hand Value: ", end="")
+        for i in range(len(player.score)):
+            if i != 0:
+                print(f"{ranks[player.score[i]]}, ", end="")
+            else:
+                print(f"{player.score[i]}, ", end="")
+        print("")
 
 texas_hold_em(player_list)

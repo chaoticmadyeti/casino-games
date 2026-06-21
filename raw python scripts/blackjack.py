@@ -311,8 +311,7 @@ def blackjack():
 # Main blackjack logic:
 if __name__ == "__main__":
     print("Hello! Welcome to Python Blackjack.")
-    print("If you don't know how to play blackjack, I highly suggest you do. This game goes by American rules.")
-    print("Note: Cents do not exist in this game. All decimals will be rounded down, to favour the house.")
+    print("Rules for this game are in README.md. Please learn the rules beforehand.")
     input("Press Enter to play... ")
 
 while money > 0:

@@ -261,7 +261,7 @@ def slots():
 
 
 print("Hello! Welcome to Python Slots!")
-print("If you don't know how to play, please learn beforehand. This game uses custom made reels.")
+print("Rules for this game are in README.md. Please learn the rules beforehand.")
 input("Press Enter to play...")
 
 while money > 0:

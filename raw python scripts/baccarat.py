@@ -231,7 +231,7 @@ def baccarat():
 
 
 print("Hello! Welcome to Python Baccarat!")
-print("If you don't know how to play, please learn beforehand. This game uses 'punto banco' rules.")
+print("Rules for this game are in README.md. Please learn the rules beforehand.")
 input("Press Enter to play...")
 
 while money > 0:

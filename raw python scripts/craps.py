@@ -162,7 +162,7 @@ def craps():
 
 
 print("Hello! Welcome to Python Craps!")
-print("If you don't know how to play, please learn beforehand. This game uses casino craps rules.")
+print("Rules for this game are in README.md. Please learn the rules beforehand.")
 input("Press Enter to play...")
 
 while money > 0:

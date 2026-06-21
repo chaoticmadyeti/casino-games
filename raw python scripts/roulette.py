@@ -425,7 +425,7 @@ def roulette():
 
 if __name__ == "__main__":
     print("Hello! Welcome to Python Roulette.")
-    print("If you don't know how to play roulette, I highly suggest you learn how to play beforehand. This game uses the European wheel.")
+    print("Rules for this game are in README.md. Please learn the rules beforehand.")
     input("Press Enter to play... ")
 
 roulette()

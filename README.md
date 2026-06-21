@@ -39,14 +39,14 @@ Casino craps rules. Only has pass line and no pass bets. Rules can be found http
 
 Utilises a custom slots reel machine. Overall, there are 7 cherries, 7 lemons, 7 oranges, 3 grapes, 3 chocolate bars, and 3 clovers, distributed evenly across all reels. Payouts are as follows:
 
-1 Cherry - money back
-2 Cherries - 2x
-3 Cherries - 5x
-3 Lemons - 10x
-3 Oranges - 15x
-3 Grapes - 20x
-3 Bars - 50x
-3 Clovers - 100x
+- 1 Cherry - money back
+- 2 Cherries - 2x
+- 3 Cherries - 5x
+- 3 Lemons - 10x
+- 3 Oranges - 15x
+- 3 Grapes - 20x
+- 3 Bars - 50x
+- 3 Clovers - 100x
 
 Simply put a wager, spin the slots machine, and hope the centre line of symbols line up in a way such that the above patterns form.
 

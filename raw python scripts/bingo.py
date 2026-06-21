@@ -109,6 +109,17 @@ def check_bingo(card_tokens): # card_tokens is an array of all numbers gotten
     
     return False
 
+# Display the card with marked numbers
+
+def display_card(card, card_tokens):
+    for i in range(0, 5):
+        for j in range(0, 5):
+            if i + j * 5 in card_tokens:
+                print("\033[32m" + f"{card[i + j * 5]:^4}" + "\033[0m", end="")
+            else:
+                print(f"{card[i + j * 5]:^4}", end="")
+        print("")
+
 # Main bingo logic
 
 def bingo():
@@ -129,6 +140,7 @@ def bingo():
         for i in bot_id:
             if check_bingo(bot_tokens[i]):
                 print(f"Bot {i + 1} won!")
+                display_card(bot_cards[i], bot_tokens[i])
                 winner = True
         
         if winner:
@@ -140,6 +152,10 @@ def bingo():
         for i in bot_id:
             bot_tokens[i] = mark_token(bot_tokens[i], current_numbers[current_number], bot_cards[i])
         current_numbers.pop(current_number)
+
+        display_card(player_card, card_tokens)
+
+        input("")
 
         if check_bingo(card_tokens):
             print("You won!")
